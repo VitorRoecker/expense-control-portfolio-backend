@@ -11,23 +11,24 @@
 > - Other Tools: AutoMapper, xUnit (for testing), etc.
 
 # 🚀 Getting Started
-Clone the backend repository:
+
+### Clone the backend repository:
 ```cmd
 git clone <backend-repository-url>
 ```
-Navigate to the project directory: 
+### Navigate to the project directory: 
 ```cmd
 cd <backend-project-directory>
 ```
-Restore NuGet packages: 
+### Restore NuGet packages: 
 ```cmd
 dotnet restore
 ```
-Update database schema:
+### Update database schema:
 ```cmd
 dotnet ef database update
 ```
-Run the application: 
+### Run the application: 
 ```cmd
 dotnet run
 ```
