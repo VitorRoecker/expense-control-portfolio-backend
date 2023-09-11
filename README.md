@@ -11,11 +11,26 @@
 > - Other Tools: AutoMapper, xUnit (for testing), etc.
 
 # 🚀 Getting Started
-> - Clone the backend repository: `git clone <backend-repository-url>`
-> - Navigate to the project directory: `cd <backend-project-directory>`
-> - Restore NuGet packages: `dotnet restore`
-> - Update database schema: `dotnet ef database update`
-> - Run the application: `dotnet run`
+Clone the backend repository:
+```cmd
+git clone <backend-repository-url>
+```
+Navigate to the project directory: 
+```cmd
+cd <backend-project-directory>
+```
+Restore NuGet packages: 
+```cmd
+dotnet restore
+```
+Update database schema:
+```cmd
+dotnet ef database update
+```
+Run the application: 
+```cmd
+dotnet run
+```
 
 ##
 Thank you for considering or using this project! Feel free to star ⭐ the repository if you find it helpful!
