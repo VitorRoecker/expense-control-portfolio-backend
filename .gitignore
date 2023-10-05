@@ -11,3 +11,6 @@
 /ExpenseControl.Application/bin/Debug/net6.0
 /ExpenseControl.Domain/bin/Debug/net6.0
 /ExpenseControl.Infra/bin/Debug/net6.0
+/ExpenseControl.CrossCutting/obj
+/ExpenseControl.Domain.Services/obj
+/ExpenseControl.Domain.Services/bin/Debug/net6.0

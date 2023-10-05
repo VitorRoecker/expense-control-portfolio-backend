@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="Interfaces\ApplicationServices\" />
+    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Interfaces\Services\" />
+  </ItemGroup>
+
 </Project>

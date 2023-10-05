@@ -1,20 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using ExpenseControl.Infra.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseControl.Infra.Context
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext
     {
-        private readonly IConfiguration _configuration;
-        public DatabaseContext(IConfiguration configuration)
+        public DatabaseContext(DbContextOptions<DatabaseContext> builder) : base(builder)
         {
-            _configuration = configuration;
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        public virtual DbSet<User> User { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            var connectionString = _configuration.GetConnectionString("ExpenseControlDB");
-            builder.UseSqlServer(connectionString);
+            base.OnModelCreating(builder);
         }
     }
 }
