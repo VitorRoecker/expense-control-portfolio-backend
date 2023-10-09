@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseControl.API.Controllers
 {
-    [ApiController]
     [Authorize]
+    [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {

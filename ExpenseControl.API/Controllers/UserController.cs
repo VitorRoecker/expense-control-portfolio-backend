@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseControl.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Authorize]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
@@ -18,8 +18,8 @@ namespace ExpenseControl.API.Controllers
             _userAppService = userAppService;
         }
 
-        [HttpPost("register")]
         [AllowAnonymous]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUserRequest createUserRequest)
         {
             try
