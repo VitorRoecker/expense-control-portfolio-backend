@@ -1,5 +1,7 @@
 ﻿using ExpenseControl.Infra.Context;
+using ExpenseControl.Infra.External_Dependence;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace ExpenseControl.API.Extensions
 {
@@ -9,7 +11,7 @@ namespace ExpenseControl.API.Extensions
         {
             services.AddDbContext<DatabaseContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("ExpenseControlDB"));
+                options.UseSqlServer(configuration.GetValue<string>("AppSettings:ConnectionStrings:ExpenseControlDB")!);
             });
         }
     }

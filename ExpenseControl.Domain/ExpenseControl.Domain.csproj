@@ -16,10 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Interfaces\ApplicationServices\" />
     <Folder Include="Interfaces\Repositories\" />
-    <Folder Include="Interfaces\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExpenseControl.Infra\ExpenseControl.Infra.csproj" />
   </ItemGroup>
 
 </Project>

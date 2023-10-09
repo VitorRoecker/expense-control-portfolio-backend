@@ -1,19 +1,21 @@
 using ExpenseControl.API.Extensions;
+using ExpenseControl.CrossCutting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
                      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                      .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
                      .AddEnvironmentVariables();
 
+builder.Services.ConfigureSwagger();
 builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.ConfigureAppSettings(builder.Configuration);
 builder.Services.ConfigureIdentity();
+
+builder.Services.ConfigureDependecyInjection();
 
 var app = builder.Build();
 
