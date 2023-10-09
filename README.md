@@ -8,6 +8,7 @@
 > - Architecture: Domain-Driven Design (DDD)
 > - ORM: Entity Framework
 > - Database: SQL Server
+> - Authentication: Identity
 
 # 🚀 Getting Started
 
