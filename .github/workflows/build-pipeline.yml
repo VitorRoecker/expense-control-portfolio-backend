@@ -42,7 +42,7 @@ jobs:
 
       - name: Build and Push Docker Image to ECR
         run: |
-          docker build -t ${{ secrets.AWS_ECR_REPOSITORY }} -f ./path/to/Dockerfile .
+          docker build -t ${{ secrets.AWS_ECR_REPOSITORY }} -f ./ExpenseControl.API/Dockerfile .
           docker tag ${{ secrets.AWS_ECR_REPOSITORY }}:latest ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
           docker push ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
 
