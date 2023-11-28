@@ -10,28 +10,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v7
-      with:
-        dotnet-version: '6.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v7
+        with:
+          dotnet-version: '6.0.x'
 
-    - name: Restore NuGet Packages
-      run: dotnet restore
+      - name: Restore NuGet Packages
+        run: dotnet restore
 
-    - name: Build Application
-      run: dotnet build --configuration Release
+      - name: Build Application
+        run: dotnet build --configuration Release
 
-    - name: Login to Docker Registry
-      run: echo ${{ secrets.AWS_ECR_PASSWORD }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_REGISTRY }}
+  publish:
+    runs-on: ubuntu-latest
 
-    - name: Build and Push Docker Image
-      run: |
-        docker build -t ${{ secrets.AWS_ECR_REPOSITORY }} -f ./ExpenseControl.API/Dockerfile .
-        docker tag ${{ secrets.AWS_ECR_REPOSITORY }}:latest ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
-        docker push ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+    needs: build
 
-    - name: Logout from Docker Registry
-      run: docker logout ${{ secrets.AWS_ECR_REGISTRY }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI and configure credentials
+        run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+
+      - name: Get ECR Login Password
+        id: ecr_login
+        run: echo "::set-output name=password::$(aws ecr get-login-password --region <your-region>)"
+
+      - name: Build and Push Docker Image to ECR
+        run: |
+          docker build -t ${{ secrets.AWS_ECR_REPOSITORY }} -f ./path/to/Dockerfile .
+          docker tag ${{ secrets.AWS_ECR_REPOSITORY }}:latest ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+          docker push ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+
+      - name: Login to Docker Registry
+        run: echo "${{ steps.ecr_login.outputs.password }}" | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_REGISTRY }}
