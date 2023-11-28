@@ -10,8 +10,5 @@
             Id = Guid.NewGuid();
             InclusionDate = DateTime.Now;
         }
-
-        public abstract bool InsertValidation();
-        public abstract bool UpdateValidation();
     }
 }

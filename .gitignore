@@ -15,3 +15,5 @@
 /ExpenseControl.Domain.Services/obj
 /ExpenseControl.Domain.Services/bin/Debug/net6.0
 /ExpenseControl.CrossCutting/bin/Debug/net6.0
+/ExpenseControl.Data/bin/Debug/net6.0
+/ExpenseControl.Data/obj

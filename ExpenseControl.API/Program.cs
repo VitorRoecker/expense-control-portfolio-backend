@@ -3,6 +3,8 @@ using ExpenseControl.CrossCutting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
+var allowOrigins = "PortalCors";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(opt =>
@@ -23,6 +25,7 @@ builder.Services.ConfigureAppSettings(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureDependecyInjection();
 builder.Services.ConfigureAuthentication(builder.Configuration);
+builder.Services.ConfigureCors(allowOrigins);
 
 var app = builder.Build();
 
@@ -34,6 +37,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(allowOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();

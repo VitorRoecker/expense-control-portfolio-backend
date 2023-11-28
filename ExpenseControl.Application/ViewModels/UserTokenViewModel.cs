@@ -9,13 +9,12 @@ namespace ExpenseControl.Application.ViewModels
         public DateTime Expiration { get; set; }
 
         public override UserToken ConvertToDomain()
-        {
-            return new UserToken { Token = Token, Expiration = Expiration };
-        }
+            => new() { Token = Token, Expiration = Expiration };
 
         public override UserTokenViewModel ConvertToViewModel(UserToken userToken)
-        {
-            return new UserTokenViewModel { Token = userToken.Token, Expiration = userToken.Expiration };
-        }
+            => new() { Token = userToken.Token, Expiration = userToken.Expiration };
+
+        public override UserToken CreateDomain()
+            => new() { Token = Token, Expiration = Expiration };
     }
 }

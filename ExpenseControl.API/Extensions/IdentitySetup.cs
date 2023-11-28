@@ -1,5 +1,5 @@
-﻿using ExpenseControl.Infra.Context;
-using ExpenseControl.Infra.Identity;
+﻿using ExpenseControl.Domain.Entities.Identity;
+using ExpenseControl.Infra.Context;
 using Microsoft.AspNetCore.Identity;
 
 namespace ExpenseControl.API.Extensions

@@ -1,7 +1,11 @@
 ﻿using ExpenseControl.Application.Interfaces;
 using ExpenseControl.Application.Services;
-using ExpenseControl.Domain.Interfaces.Services;
-using ExpenseControl.Domain.Services;
+using ExpenseControl.Data.Repositories;
+using ExpenseControl.Data.Repositories.Interfaces;
+using ExpenseControl.Domain.Services.Interfaces.Services;
+using ExpenseControl.Domain.Services.Interfaces.Services.Identity;
+using ExpenseControl.Domain.Services.Services;
+using ExpenseControl.Domain.Services.Services.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ExpenseControl.CrossCutting
@@ -21,6 +25,10 @@ namespace ExpenseControl.CrossCutting
 
             services.AddScoped<IUserAppService, UserAppService>();
             services.AddScoped<IAuthAppService, AuthAppService>();
+            services.AddScoped<ICategoryAppService, CategoryAppService>();
+            services.AddScoped<ICategoryUserAppService, CategoryUserAppService>();
+            services.AddScoped<IExpenseAppService, ExpenseAppService>();
+            services.AddScoped<IIncomeAppService, IncomeAppService>();
 
             #endregion
         }
@@ -31,6 +39,10 @@ namespace ExpenseControl.CrossCutting
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryUserService, CategoryUserService>();
+            services.AddScoped<IExpenseService, ExpenseService>();
+            services.AddScoped<IIncomeService, IncomeService>();
 
             #endregion
 
@@ -43,6 +55,15 @@ namespace ExpenseControl.CrossCutting
 
         private static void ConfigureRepositories(IServiceCollection services)
         {
+            #region Scoped
+
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryUserRepository, CategoryUserRepository>();
+            services.AddScoped<IExpenseRepository, ExpenseRepository>();
+            services.AddScoped<IIncomeRepository, IncomeRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            #endregion
         }
     }
 }

@@ -15,12 +15,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ExpenseControl.Infra\ExpenseControl.Infra.csproj" />
-  </ItemGroup>
-
 </Project>

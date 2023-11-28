@@ -1,5 +1,5 @@
 ﻿using ExpenseControl.Application.Interfaces;
-using ExpenseControl.Domain.Requests;
+using ExpenseControl.Domain.Services.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

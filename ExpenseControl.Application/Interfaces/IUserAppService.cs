@@ -1,5 +1,5 @@
 ﻿using ExpenseControl.Application.ViewModels;
-using ExpenseControl.Domain.Requests;
+using ExpenseControl.Domain.Services.Requests;
 
 namespace ExpenseControl.Application.Interfaces
 {

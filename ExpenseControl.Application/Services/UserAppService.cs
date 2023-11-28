@@ -1,7 +1,7 @@
 ﻿using ExpenseControl.Application.Interfaces;
 using ExpenseControl.Application.ViewModels;
-using ExpenseControl.Domain.Interfaces.Services;
-using ExpenseControl.Domain.Requests;
+using ExpenseControl.Domain.Services.Interfaces.Services;
+using ExpenseControl.Domain.Services.Requests;
 
 namespace ExpenseControl.Application.Services
 {
