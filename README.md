@@ -5,7 +5,7 @@
 
 # 💻 Tech Stack
 > - Language: C#
-> - Architecture: layered Architecture
+> - Architecture: Layered Architecture
 > - ORM: Entity Framework
 > - Database: SQL Server
 > - Authentication: Identity
