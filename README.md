@@ -1,7 +1,7 @@
 <h1 align="center">Personal Finance Management App - Backend</h1>
 
 # 📝 Overview
-> - This repository contains the backend code for the Personal Finance Management App. This backend is developed using C# with Domain-Driven Design (DDD) and Entity Framework to provide robust, scalable, and maintainable solutions for managing personal finances.
+> - This repository contains the backend code for the Personal Finance Management App. This backend is developed using C# with Layered Architecture and Entity Framework to provide robust, scalable, and maintainable solutions for managing personal finances.
 
 # 💻 Tech Stack
 > - Language: C#
