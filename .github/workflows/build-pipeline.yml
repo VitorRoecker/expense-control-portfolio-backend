@@ -1,0 +1,37 @@
+name: Build and Publish to AWS ECR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v7
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Restore NuGet Packages
+      run: dotnet restore
+
+    - name: Build Application
+      run: dotnet build --configuration Release
+
+    - name: Login to Docker Registry
+      run: echo ${{ secrets.AWS_ECR_PASSWORD }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_REGISTRY }}
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t ${{ secrets.AWS_ECR_REPOSITORY }} -f ./ExpenseControl.API/Dockerfile .
+        docker tag ${{ secrets.AWS_ECR_REPOSITORY }}:latest ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+        docker push ${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPOSITORY }}:latest
+
+    - name: Logout from Docker Registry
+      run: docker logout ${{ secrets.AWS_ECR_REGISTRY }}
