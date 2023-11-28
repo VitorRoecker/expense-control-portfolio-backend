@@ -38,7 +38,7 @@ jobs:
 
       - name: Get ECR Login Password
         id: ecr_login
-        run: echo "::set-output name=password::$(aws ecr get-login-password --region <your-region>)"
+        run: echo "::set-output name=password::$(aws ecr get-login-password --region ${{ secrets.AWS_REGION }})"
 
       - name: Build and Push Docker Image to ECR
         run: |
