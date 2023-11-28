@@ -5,7 +5,7 @@
 
 # 💻 Tech Stack
 > - Language: C#
-> - Architecture: Domain-Driven Design (DDD)
+> - Architecture: layered Architecture
 > - ORM: Entity Framework
 > - Database: SQL Server
 > - Authentication: Identity
