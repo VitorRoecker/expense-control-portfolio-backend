@@ -44,11 +44,11 @@ jobs:
         id: ecr_login
         run: echo "::set-output name=password::$(aws ecr get-login-password --region ${{ secrets.AWS_REGION }})"
 
+      - name: Login to Docker Registry
+        run: echo "${{ steps.ecr_login.outputs.password }}" | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_REGISTRY }}
+
       - name: Build and Push Docker Image to ECR
         run: |
           docker build -t ${{ secrets.AWS_ECR_REPOSITORY }} -f ./ExpenseControl.API/Dockerfile .
           docker tag ${{ secrets.AWS_ECR_REPOSITORY }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_REPOSITORY }}:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_ECR_REPOSITORY }}:latest
-
-      - name: Login to Docker Registry
-        run: echo "${{ steps.ecr_login.outputs.password }}" | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_REGISTRY }}
