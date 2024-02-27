@@ -49,7 +49,7 @@ namespace ExpenseControl.Infra.Migrations
 
                     b.HasIndex("CategoryUserId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("ExpenseControl.Domain.Entities.CategoryUser", b =>
@@ -112,7 +112,7 @@ namespace ExpenseControl.Infra.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Expense");
+                    b.ToTable("Expense", (string)null);
                 });
 
             modelBuilder.Entity("ExpenseControl.Domain.Entities.Identity.User", b =>
@@ -215,7 +215,7 @@ namespace ExpenseControl.Infra.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Income");
+                    b.ToTable("Income", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

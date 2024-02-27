@@ -29,7 +29,7 @@ namespace ExpenseControl.API.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
     }

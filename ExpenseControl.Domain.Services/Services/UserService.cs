@@ -1,5 +1,6 @@
 ﻿using ExpenseControl.Domain.Entities.Identity;
 using ExpenseControl.Domain.Exceptions;
+using ExpenseControl.Domain.Services.Base;
 using ExpenseControl.Domain.Services.Interfaces.Services;
 using ExpenseControl.Domain.Services.Interfaces.Services.Identity;
 using ExpenseControl.Domain.Services.Requests;
@@ -21,9 +22,24 @@ namespace ExpenseControl.Domain.Services.Services
 
         public async Task<UserToken> CreateUser(CreateUserRequest userRequest)
         {
+            if (!Util.ValidaDocumento(userRequest.DocumentoFederal))
+                throw new ExpenseControlException("O documento federal informado não é válido. Revise as informações e tente novamente");
+
+            userRequest.DocumentoFederal = Util.DeixaNumeros(userRequest.DocumentoFederal);
+
+            User? entity;
+
+            entity = await _userManager.FindByEmailAsync(userRequest.Email);
+            if (entity is not null)
+                throw new ExpenseControlException("O email informado já está sendo utilizado por outro usuário");
+
+            entity = await _userManager.FindByNameAsync(userRequest.DocumentoFederal);
+            if (entity is not null)
+                throw new ExpenseControlException("O documento federal informado já está sendo utilizado por outro usuário");
+
             var user = new User
             {
-                UserName = userRequest.Name,
+                UserName = userRequest.DocumentoFederal,
                 Email = userRequest.Email,
                 PhoneNumber = userRequest.PhoneNumber,
             };
@@ -33,7 +49,7 @@ namespace ExpenseControl.Domain.Services.Services
             if (!result.Succeeded)
                 throw new ExpenseControlException($"Erro ao registrar usuário: {result.Errors}");
 
-            return _jwtService.BuildToken(user.Email!);
+            return _jwtService.BuildToken(user);
         }
     }
 }

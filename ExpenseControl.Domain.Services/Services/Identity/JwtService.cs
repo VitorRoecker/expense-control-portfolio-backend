@@ -1,4 +1,5 @@
-﻿using ExpenseControl.Domain.Services.Interfaces.Services.Identity;
+﻿using ExpenseControl.Domain.Entities.Identity;
+using ExpenseControl.Domain.Services.Interfaces.Services.Identity;
 using ExpenseControl.Domain.ValueObjects;
 using ExpenseControl.Infra.External_Dependence;
 using Microsoft.Extensions.Options;
@@ -18,11 +19,12 @@ namespace ExpenseControl.Domain.Services.Services.Identity
             _appSettings = options.Value;
         }
 
-        public UserToken BuildToken(string email)
+        public UserToken BuildToken(User user)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.UniqueName, email),
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id),
+                new Claim(JwtRegisteredClaimNames.Name, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -40,6 +42,7 @@ namespace ExpenseControl.Domain.Services.Services.Identity
 
             return new UserToken()
             {
+                CodigoUsuario = Guid.Parse(user.Id),
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration
             };

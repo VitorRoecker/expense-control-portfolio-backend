@@ -20,12 +20,12 @@ namespace ExpenseControl.Domain.Services.Services.Identity
 
         public async Task<UserToken> Login(LoginRequest loginRequest)
         {
-            var user = await _userManager.FindByNameAsync(loginRequest.Name);
+            var user = await _userManager.FindByNameAsync(loginRequest.DocumentoFederal);
 
             if (!await _userManager.CheckPasswordAsync(user, loginRequest.Password))
                 throw new ExpenseControlException("Login inválido.");
 
-            return _jwtService.BuildToken(user.Email);
+            return _jwtService.BuildToken(user);
         }
     }
 }
