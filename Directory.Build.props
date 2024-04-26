@@ -1,0 +1,34 @@
+<Project>
+    <PropertyGroup Label="Common properties">
+        <Product>Expense Control Service</Product>
+        <Authors>Vitor Adriel Roecker</Authors>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>preview</LangVersion>
+        <EnablePreviewFeatures>true</EnablePreviewFeatures>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <NoWarn>CS8632, CS8618, CS8604, CS8600, CS8602, CS8603, CS8604, IDE0031, CS8625</NoWarn>
+        <RepositoryUrl>https://github.com/VitorRoecker/expense-control-portfolio-backend</RepositoryUrl>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Packages dependency versions">
+        
+        <!-- Package versions -->
+        <Microsoft_AspNetCore_Authentication_JwtBearer_Version>6.0.22</Microsoft_AspNetCore_Authentication_JwtBearer_Version>
+        <Microsoft_AspNetCore_Authentication_OpenIdConnect_Version>6.0.22</Microsoft_AspNetCore_Authentication_OpenIdConnect_Version>
+        <Microsoft_AspNetCore_Identity_EntityFrameworkCore_Version>6.0.23</Microsoft_AspNetCore_Identity_EntityFrameworkCore_Version>
+        <Microsoft_AspNetCore_Mvc_Versioning_Version>5.1.0</Microsoft_AspNetCore_Mvc_Versioning_Version>
+        <Microsoft_AspNetCore_Mvc_Versioning_ApiExplorer_Version>5.1.0</Microsoft_AspNetCore_Mvc_Versioning_ApiExplorer_Version>
+        <Microsoft_EntityFrameworkCore_SqlServer_Version>6.0.23</Microsoft_EntityFrameworkCore_SqlServer_Version>
+        <Microsoft_EntityFrameworkCore_Tools_Version>6.0.22</Microsoft_EntityFrameworkCore_Tools_Version>
+        <Microsoft_Extensions_Configuration_Binder_Version>7.0.4</Microsoft_Extensions_Configuration_Binder_Version>
+        <Microsoft_VisualStudio_Azure_Containers_Tools_Targets_Version>1.17.0</Microsoft_VisualStudio_Azure_Containers_Tools_Targets_Version>
+        <Newtonsoft_Json_Version>13.0.3</Newtonsoft_Json_Version>
+        <Serilog_Sinks_Console_Version>5.0.1</Serilog_Sinks_Console_Version>
+        <Serilog_Sinks_File_Version>5.0.0</Serilog_Sinks_File_Version>
+        <Swashbuckle_AspNetCore_Version>6.5.0</Swashbuckle_AspNetCore_Version>
+        <System_IdentityModel_Tokens_Jwt_Version>7.0.2</System_IdentityModel_Tokens_Jwt_Version>
+
+    </PropertyGroup>
+</Project>

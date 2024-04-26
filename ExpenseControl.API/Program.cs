@@ -2,10 +2,17 @@ using ExpenseControl.API.Extensions;
 using ExpenseControl.CrossCutting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Serilog;
 
 var allowOrigins = "PortalCors";
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Debug()
+        .WriteTo.Console()
+        .WriteTo.File("logs/expenseControl-log.txt", rollingInterval: RollingInterval.Day)
+        .CreateLogger();
 
 builder.Services.AddControllers(opt =>
 {
@@ -45,4 +52,19 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+try
+{
+    await app.RunAsync();
+
+    Log.Information("Stopped cleanly");
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "An unhandled exception occured during bootstrapping");
+    await app.StopAsync();
+}
+finally
+{
+    Log.CloseAndFlush();
+    await app.DisposeAsync();
+}
