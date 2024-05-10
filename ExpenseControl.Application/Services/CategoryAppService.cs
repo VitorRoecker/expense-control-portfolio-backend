@@ -4,15 +4,8 @@ using ExpenseControl.Domain.Services.Interfaces.Services;
 
 namespace ExpenseControl.Application.Services
 {
-    public class CategoryAppService : ICategoryAppService
+    public class CategoryAppService(ICategoryService _service) : ICategoryAppService
     {
-        private readonly ICategoryService _service;
-
-        public CategoryAppService(ICategoryService service)
-        {
-            _service = service;
-        }
-
         public async Task<CategoryViewModel> GetById(Guid id)
         {
             var entity = await _service.GetById(id) ?? throw new Exception("Category not found");

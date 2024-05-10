@@ -5,8 +5,7 @@ using ExpenseControl.Domain.Services.Services.Base;
 
 namespace ExpenseControl.Domain.Services.Services
 {
-    public class CategoryUserService : ServiceBase<CategoryUser, ICategoryUserRepository>, ICategoryUserService
+    public class CategoryUserService(ICategoryUserRepository repository) : ServiceBase<CategoryUser, ICategoryUserRepository>(repository), ICategoryUserService
     {
-        public CategoryUserService(ICategoryUserRepository repository) : base(repository) { }
     }
 }

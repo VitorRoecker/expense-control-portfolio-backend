@@ -3,13 +3,7 @@ using ExpenseControl.Domain.Services.Interfaces.Services;
 
 namespace ExpenseControl.Application.Services
 {
-    public class CategoryUserAppService : ICategoryUserAppService
+    public class CategoryUserAppService(ICategoryUserService _service) : ICategoryUserAppService
     {
-        private readonly ICategoryUserService _service;
-
-        public CategoryUserAppService(ICategoryUserService service)
-        {
-            _service = service;
-        }
     }
 }

@@ -7,17 +7,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ExpenseControl.Domain.Services.Services.Identity
 {
-    public class AuthService : IAuthService
+    public class AuthService(UserManager<User> _userManager, IJwtService _jwtService) : IAuthService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly IJwtService _jwtService;
-
-        public AuthService(UserManager<User> userManager, IJwtService jwtService)
-        {
-            _userManager = userManager;
-            _jwtService = jwtService;
-        }
-
         public async Task<UserToken> Login(LoginRequest loginRequest)
         {
             var user = await _userManager.FindByNameAsync(loginRequest.DocumentoFederal);

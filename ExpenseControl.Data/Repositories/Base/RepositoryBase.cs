@@ -5,16 +5,10 @@ using System.Linq.Expressions;
 
 namespace ExpenseControl.Data.Repositories.Base
 {
-    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
+    public class RepositoryBase<TEntity>(DatabaseContext context) : IRepositoryBase<TEntity> where TEntity : class
     {
-        protected readonly DatabaseContext Context;
-        protected readonly DbSet<TEntity> DbSet;
-
-        public RepositoryBase(DatabaseContext context)
-        {
-            Context = context ?? throw new ArgumentNullException(nameof(context));
-            DbSet = context.Set<TEntity>();
-        }
+        protected readonly DatabaseContext Context = context ?? throw new ArgumentNullException(nameof(context));
+        protected readonly DbSet<TEntity> DbSet = context.Set<TEntity>();
 
         public virtual async Task<TEntity?> GetById(Guid id)
             => await DbSet.FindAsync(id);
@@ -26,18 +20,33 @@ namespace ExpenseControl.Data.Repositories.Base
             => DbSet.AsNoTracking().Where(predicate);
 
         public virtual async void Add(TEntity entity)
-            => await DbSet.AddAsync(entity);
+        {
+            await DbSet.AddAsync(entity);
+            Context.SaveChanges();
+        }
 
         public virtual async void AddRange(IEnumerable<TEntity> entities)
-            => await DbSet.AddRangeAsync(entities);
+        {
+            await DbSet.AddRangeAsync(entities);
+            Context.SaveChanges();
+        }
 
-        public virtual void Update(TEntity entity)
-            => Context.Entry(entity).State = EntityState.Modified;
+        public virtual async void Update(TEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+            Context.SaveChanges();
+        }
 
         public virtual void Remove(TEntity entity)
-            => DbSet.Remove(entity);
+        {
+            DbSet.Remove(entity);
+            Context.SaveChanges();
+        }
 
         public virtual void RemoveRange(IEnumerable<TEntity> entities)
-            => DbSet.RemoveRange(entities);
+        {
+            DbSet.RemoveRange(entities);
+            Context.SaveChanges();
+        }
     }
 }

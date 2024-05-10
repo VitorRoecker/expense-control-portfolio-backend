@@ -9,15 +9,8 @@ namespace ExpenseControl.API.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/[controller]")]
-    public class ExpenseController : ControllerBase
+    public class ExpenseController(IExpenseAppService _appService) : ControllerBase
     {
-        private readonly IExpenseAppService _appService;
-
-        public ExpenseController(IExpenseAppService appService)
-        {
-            _appService = appService;
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

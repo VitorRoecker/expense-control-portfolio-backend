@@ -5,8 +5,7 @@ using ExpenseControl.Infra.Context;
 
 namespace ExpenseControl.Data.Repositories
 {
-    public class IncomeRepository : RepositoryBase<Income>, IIncomeRepository
+    public class IncomeRepository(DatabaseContext context) : RepositoryBase<Income>(context), IIncomeRepository
     {
-        public IncomeRepository(DatabaseContext context) : base(context) { }
     }
 }

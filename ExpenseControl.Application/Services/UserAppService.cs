@@ -5,15 +5,8 @@ using ExpenseControl.Domain.Services.Requests;
 
 namespace ExpenseControl.Application.Services
 {
-    public class UserAppService : IUserAppService
+    public class UserAppService(IUserService _userService) : IUserAppService
     {
-        private IUserService _userService;
-
-        public UserAppService(IUserService userService)
-        {
-            _userService = userService;
-        }
-
         public async Task<UserTokenViewModel> CreateUser(CreateUserRequest createUserRequest)
         {
             var userToken = await _userService.CreateUser(createUserRequest);

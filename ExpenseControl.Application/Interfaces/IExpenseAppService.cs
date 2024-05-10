@@ -3,7 +3,5 @@ using ExpenseControl.Application.ViewModels;
 
 namespace ExpenseControl.Application.Interfaces
 {
-    public interface IExpenseAppService : IAppServiceBase<ExpenseViewModel>
-    {
-    }
+    public interface IExpenseAppService : IAppServiceBase<ExpenseViewModel>;
 }

@@ -3,7 +3,5 @@ using ExpenseControl.Domain.Services.Interfaces.Services.Base;
 
 namespace ExpenseControl.Domain.Services.Interfaces.Services
 {
-    public interface IIncomeService : IServiceBase<Income>
-    {
-    }
+    public interface IIncomeService : IServiceBase<Income>;
 }

@@ -9,15 +9,8 @@ namespace ExpenseControl.API.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController(IAuthAppService _authAppService) : ControllerBase
     {
-        private readonly IAuthAppService _authAppService;
-
-        public AuthController(IAuthAppService authAppService)
-        {
-            _authAppService = authAppService;
-        }
-
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginRequest loginRequest)

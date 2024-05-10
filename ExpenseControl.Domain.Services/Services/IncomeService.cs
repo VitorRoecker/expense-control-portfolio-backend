@@ -5,8 +5,7 @@ using ExpenseControl.Domain.Services.Services.Base;
 
 namespace ExpenseControl.Domain.Services.Services
 {
-    public class IncomeService : ServiceBase<Income, IIncomeRepository>, IIncomeService
+    public class IncomeService(IIncomeRepository repository) : ServiceBase<Income, IIncomeRepository>(repository), IIncomeService
     {
-        public IncomeService(IIncomeRepository repository) : base(repository) { }
     }
 }

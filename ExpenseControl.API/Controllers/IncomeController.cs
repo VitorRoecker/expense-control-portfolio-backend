@@ -10,15 +10,8 @@ namespace ExpenseControl.API.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/[controller]")]
-    public class IncomeController : ControllerBase
+    public class IncomeController(IIncomeAppService _appService) : ControllerBase
     {
-        private readonly IIncomeAppService _appService;
-
-        public IncomeController(IIncomeAppService appService)
-        {
-            _appService = appService;
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

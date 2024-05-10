@@ -6,15 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseControl.Infra.Context
 {
-    public class DatabaseContext : IdentityDbContext<User>
+    public class DatabaseContext(DbContextOptions<DatabaseContext> builder) : IdentityDbContext<User>(builder)
     {
         public DbSet<Expense> Expense {  get; set; }
         public DbSet<Income> Income { get; set; }
         public DbSet<Category> Category { get; set; }
-
-        public DatabaseContext(DbContextOptions<DatabaseContext> builder) : base(builder)
-        {
-        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

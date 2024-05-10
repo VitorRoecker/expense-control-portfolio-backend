@@ -4,16 +4,11 @@ using System.Linq.Expressions;
 
 namespace ExpenseControl.Domain.Services.Services.Base
 {
-    public class ServiceBase<TEntity, TRepository> : IServiceBase<TEntity>
-                                                         where TEntity : class
-                                                         where TRepository : IRepositoryBase<TEntity>
+    public class ServiceBase<TEntity, TRepository>(TRepository repository) : IServiceBase<TEntity>
+                                                                                    where TEntity : class
+                                                                                    where TRepository : IRepositoryBase<TEntity>
     {
-        private readonly TRepository _repository;
-
-        public ServiceBase(TRepository repository)
-        {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        }
+        private readonly TRepository _repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
         public async Task<TEntity?> GetById(Guid id)
             => await _repository.GetById(id);

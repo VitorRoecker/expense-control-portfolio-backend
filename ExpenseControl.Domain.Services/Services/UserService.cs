@@ -9,17 +9,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ExpenseControl.Domain.Services.Services
 {
-    public class UserService : IUserService
+    public class UserService(UserManager<User> _userManager, IJwtService _jwtService) : IUserService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly IJwtService _jwtService;
-
-        public UserService(UserManager<User> userManager, IJwtService jwtService)
-        {
-            _userManager = userManager;
-            _jwtService = jwtService;
-        }
-
         public async Task<UserToken> CreateUser(CreateUserRequest userRequest)
         {
             if (!Util.ValidaDocumento(userRequest.DocumentoFederal))

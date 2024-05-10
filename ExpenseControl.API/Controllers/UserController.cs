@@ -9,15 +9,8 @@ namespace ExpenseControl.API.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class UserController(IUserAppService _userAppService) : ControllerBase
     {
-        private readonly IUserAppService _userAppService;
-
-        public UserController(IUserAppService userAppService)
-        {
-            _userAppService = userAppService;
-        }
-
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUserRequest createUserRequest)

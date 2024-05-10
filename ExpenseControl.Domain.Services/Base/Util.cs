@@ -47,7 +47,7 @@ namespace ExpenseControl.Domain.Services.Base
             else
                 resto = 11 - resto;
             digito = resto.ToString();
-            tempCnpj = tempCnpj + digito;
+            tempCnpj += digito;
             soma = 0;
             for (var i = 0; i < 13; i++)
                 soma += int.Parse(tempCnpj[i].ToString()) * multiplicador2[i];
@@ -56,7 +56,7 @@ namespace ExpenseControl.Domain.Services.Base
                 resto = 0;
             else
                 resto = 11 - resto;
-            digito = digito + resto;
+            digito += resto;
             return cnpj.EndsWith(digito);
         }
 
@@ -87,7 +87,7 @@ namespace ExpenseControl.Domain.Services.Base
             else
                 resto = 11 - resto;
             var digito = resto.ToString();
-            tempCpf = tempCpf + digito;
+            tempCpf += digito;
             soma = 0;
             for (var i = 0; i < 10; i++)
                 soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
@@ -96,7 +96,7 @@ namespace ExpenseControl.Domain.Services.Base
                 resto = 0;
             else
                 resto = 11 - resto;
-            digito = digito + resto;
+            digito += resto;
             return cpf.EndsWith(digito);
         }
 
@@ -128,7 +128,7 @@ namespace ExpenseControl.Domain.Services.Base
             if (!(temNumero && temLetra && temUpper && temLower && temEspecial) || senha.Length < 8)
                 throw new InvalidDataException("Senha deve conter letras maiusculas e minusculas, números, caracteres especiais e pelo menos 8 caracteres");
 
-            if (senha.Contains(" "))
+            if (senha.Contains(' '))
                 throw new InvalidDataException("A senha não pode conter espaços");
 
             return true;

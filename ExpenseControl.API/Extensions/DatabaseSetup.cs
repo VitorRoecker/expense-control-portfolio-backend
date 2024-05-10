@@ -1,7 +1,5 @@
 ﻿using ExpenseControl.Infra.Context;
-using ExpenseControl.Infra.External_Dependence;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace ExpenseControl.API.Extensions
 {

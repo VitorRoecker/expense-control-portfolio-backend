@@ -1,18 +1,16 @@
 using ExpenseControl.API.Extensions;
 using ExpenseControl.CrossCutting;
+using ExpenseControl.Infra.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var allowOrigins = "PortalCors";
 
 var builder = WebApplication.CreateBuilder(args);
 
-Log.Logger = new LoggerConfiguration()
-        .MinimumLevel.Debug()
-        .WriteTo.Console()
-        .WriteTo.File("logs/expenseControl-log.txt", rollingInterval: RollingInterval.Day)
-        .CreateLogger();
+builder.ConfigureLogging();
 
 builder.Services.AddControllers(opt =>
 {
@@ -35,6 +33,14 @@ builder.Services.ConfigureAuthentication(builder.Configuration);
 builder.Services.ConfigureCors(allowOrigins);
 
 var app = builder.Build();
+
+using var scope = app.Services.CreateScope();
+
+var services = scope.ServiceProvider;
+
+var context = services.GetRequiredService<DatabaseContext>();
+await context.Database.MigrateAsync();
+await context.Database.EnsureCreatedAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

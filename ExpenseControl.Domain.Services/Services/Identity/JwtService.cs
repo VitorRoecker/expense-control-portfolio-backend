@@ -10,14 +10,9 @@ using System.Text;
 
 namespace ExpenseControl.Domain.Services.Services.Identity
 {
-    public class JwtService : IJwtService
+    public class JwtService(IOptions<AppSettings> options) : IJwtService
     {
-        private readonly AppSettings _appSettings;
-
-        public JwtService(IOptions<AppSettings> options)
-        {
-            _appSettings = options.Value;
-        }
+        private readonly AppSettings _appSettings = options.Value;
 
         public UserToken BuildToken(User user)
         {
@@ -33,14 +28,14 @@ namespace ExpenseControl.Domain.Services.Services.Identity
 
             var expiration = DateTime.UtcNow.AddHours(1);
 
-            JwtSecurityToken token = new JwtSecurityToken(
+            JwtSecurityToken token = new(
                issuer: null,
                audience: null,
                claims: claims,
                expires: expiration,
                signingCredentials: creds);
 
-            return new UserToken()
+            return new()
             {
                 CodigoUsuario = Guid.Parse(user.Id),
                 Token = new JwtSecurityTokenHandler().WriteToken(token),

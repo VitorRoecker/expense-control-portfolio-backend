@@ -30,7 +30,7 @@ namespace ExpenseControl.API.Extensions
                                 Id="Bearer"
                             }
                         },
-                        new string[]{}
+                        Array.Empty<string>()
                     }
                 });
             });

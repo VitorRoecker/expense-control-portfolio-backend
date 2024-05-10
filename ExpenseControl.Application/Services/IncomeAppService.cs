@@ -4,15 +4,8 @@ using ExpenseControl.Domain.Services.Interfaces.Services;
 
 namespace ExpenseControl.Application.Services
 {
-    public class IncomeAppService : IIncomeAppService
+    public class IncomeAppService(IIncomeService _service) : IIncomeAppService
     {
-        private readonly IIncomeService _service;
-
-        public IncomeAppService(IIncomeService service)
-        {
-            _service = service;
-        }
-
         public async Task<IncomeViewModel> GetById(Guid id)
         {
             var entity = await _service.GetById(id) ?? throw new Exception("Income not found");
