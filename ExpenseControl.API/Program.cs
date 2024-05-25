@@ -16,13 +16,12 @@ builder.Services.AddControllers(opt =>
     opt.Filters.Add(new AuthorizeFilter(policy));
 });
 
-builder.Services.ConfigureSwagger();
-
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
                      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                      .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
                      .AddEnvironmentVariables();
 
+builder.Services.ConfigureSwagger();
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureAppSettings(builder.Configuration);
 builder.Services.ConfigureIdentity();
