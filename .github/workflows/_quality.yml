@@ -2,8 +2,8 @@ name: Quality
 on:
   workflow_call:
     inputs:
-      path:
-        description: 'The path of project passed from the caller workflow'
+      project:
+        description: 'The project passed from the caller workflow'
         required: true
         type: string
     secrets:
@@ -42,7 +42,7 @@ jobs:
       - name: Run Analysis
         uses: codacy/codacy-analysis-cli-action@v4.2.0
         with:
-          directory: ${{ inputs.path }}
+          directory: ${{ inputs.project }}
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           verbose: true
           output: results.sarif

@@ -64,7 +64,7 @@ jobs:
     needs: [ test ]
     uses: ./.github/workflows/_quality.yml
     with:
-      path: $GITHUB_WORKSPACE/${{ inputs.path }}
+      project: $GITHUB_WORKSPACE/${{ inputs.project }}
     secrets: inherit
   security:
     if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
