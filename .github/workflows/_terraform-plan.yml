@@ -1,0 +1,97 @@
+name: _Terraform Plan
+
+on:
+  workflow_call:
+    secrets:
+      PIPELINE_TOKEN:
+        description: 'The pipeline token passed from the caller workflow'
+        required: true
+      AWS_ROLE:
+        description: 'Aws Role'
+        required: true
+      AWS_REGION:
+        description: 'AWS_REGION'
+        required: true
+
+jobs:
+  terraform-plan:
+    name: "Terraform Plan"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+    permissions:
+      id-token: write
+      contents: read
+      issues: write
+      pull-requests: write
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Add terraform as submodule
+        run: |
+          git config --global credential.helper store
+          git submodule add https://${{ secrets.PIPELINE_TOKEN }}@github.com/VitorRoecker/expense-control-terraform.git terraform/modules
+        working-directory: .
+
+      - name: Setup - Terraform CLI
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+          terraform_version: 1.6.6
+
+      - name: "Run - Terraform Init"
+        id: init
+        run: |
+          terraform init -backend=true -backend-config="config/backend.hcl"
+
+      - name: "Run - Terraform Validate"
+        id: validate
+        run: |
+          terraform validate -no-color
+      
+      - name: "Run - Terraform Plan"
+        id: plan
+        run: |
+          terraform plan -compact-warnings -no-color -var-file="config/terraform.tfvars" -out terraform-out.tfplan
+
+      - name: "Get Plan Result"
+        id: getplan
+        run: |
+          terraform show -no-color terraform-out.tfplan
+
+      - name: "Run - Terraform Comment"
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `## Terraform \`${process.env.BRANCH}\`
+
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+        env:
+          BRANCH: ${{ github.event.pull_request.base.ref }}
+          PLAN: "terraform\n${{ steps.getplan.outputs.stdout }}"

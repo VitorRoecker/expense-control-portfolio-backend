@@ -1,0 +1,84 @@
+name: Workflow
+on:
+  workflow_call:
+    inputs:
+      product:
+        description: 'The name of product passed form the caller workflow'
+        required: true
+        type: string
+      path:
+        description: 'The path passed from the caller workflow'
+        required: true
+        type: string
+      project:
+        description: 'The project passed from the caller workflow'
+        required: true
+        type: string
+      test:
+        description: 'The test path passed from the caller workflow'
+        required: true
+        type: string
+      service-name:
+        description: 'The service name passed from the caller workflow'
+        required: true
+        type: string
+      destroy:
+        description: 'The terraform destroy passed from the caller workflow'
+        required: true
+        type: boolean
+    secrets:
+      PIPELINE_TOKEN:
+        description: 'The pipeline token passed from the caller workflow'
+        required: true
+      AWS_REGION:
+        description: 'AWS_REGION'
+        required: true
+      AWS_ROLE:
+        description: 'AWS_ROLE'
+        required: true
+      CODACY_PROJECT_TOKEN:
+        description: 'CODACY_PROJECT_TOKEN'
+        required: true
+
+jobs:
+  build:
+    uses: ./.github/workflows/_build.yml
+    with:
+      project: ./${{ inputs.path }}/${{ inputs.project }}
+  test:
+    needs: [ build ]
+    uses: ./.github/workflows/_test.yml
+    with:
+      test: ./${{ inputs.test }}
+      project: ${{ inputs.project }}
+  quality:
+    needs: [ test ]
+    uses: ./.github/workflows/_quality.yml
+    with:
+      path: $GITHUB_WORKSPACE/${{ inputs.path }}
+    secrets: inherit
+  security:
+    needs: [ quality ]
+    uses: ./.github/workflows/_security.yml
+    with:
+      path: ./${{ inputs.path }}
+      project: ${{ inputs.project }}
+    secrets: inherit
+  #terraform-plan: 
+  #  needs: [ security ]
+  #  uses: ./.github/workflows/_terraform-plan.yml
+  #  secrets: inherit
+  #terraform-apply:
+  #  needs: [ terraform-plan ]
+  #  uses: ./.github/workflows/_terraform-apply.yml
+  #  with:
+  #    destroy: ${{ inputs.destroy }}
+  #  secrets: inherit
+  #deploy:
+  #  needs: [ terraform-apply ]
+  #  uses: ./.github/workflows/_deploy.yml
+  #  secrets: inherit
+  #  with:
+  #    product: ${{ inputs.product }}
+  #    project: ${{ inputs.project }}
+  #    service-name: ${{ inputs.service-name }}

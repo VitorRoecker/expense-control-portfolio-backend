@@ -1,0 +1,22 @@
+name: Expense Control Api
+run-name: Expense Control Workflow
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+jobs:
+  workflow:
+    uses: ./.github/workflows/_workflow.yml
+    with:
+      path: .
+      project: ExpenseControl.API
+      test: ExpenseControl.Test
+      product: Expense-Control
+      service-name: Expense-Control-Api
+      destroy: false
+    secrets:
+      PIPELINE_TOKEN: ${{ secrets.PIPELINE_TOKEN }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_ROLE: ${{ secrets.AWS_ROLE }}
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}

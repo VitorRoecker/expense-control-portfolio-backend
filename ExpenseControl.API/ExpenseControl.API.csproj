@@ -11,14 +11,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="$(Microsoft_Extensions_Configuration_Binder_Version)" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="$(Microsoft_VisualStudio_Azure_Containers_Tools_Targets_Version)" />
     <PackageReference Include="Newtonsoft.Json" Version="$(Newtonsoft_Json_Version)" />
-    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="$(Serilog_AspNetCore_Version)" />
     <PackageReference Include="Serilog.Sinks.Console" Version="$(Serilog_Sinks_Console_Version)" />
     <PackageReference Include="Serilog.Sinks.File" Version="$(Serilog_Sinks_File_Version)" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="$(Swashbuckle_AspNetCore_Version)" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="$(System_IdentityModel_Tokens_Jwt_Version)" />
   </ItemGroup>
 
   <ItemGroup>
