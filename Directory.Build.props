@@ -8,7 +8,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <NoWarn>CS8632, CS8618, CS8604, CS8600, CS8602, CS8603, CS8604, IDE0031, CS8625</NoWarn>
+        <NoWarn>CS8632, CS8618, CS8604, CS8600, CS8602, CS8603, CS8604, IDE0031, CS8625, CS9113</NoWarn>
         <RepositoryUrl>https://github.com/VitorRoecker/expense-control-portfolio-backend</RepositoryUrl>
     </PropertyGroup>
 
@@ -55,6 +55,7 @@
         <!--Xunit-->
         <Xunit_Version>2.4.2</Xunit_Version>
         <Xunit_Runner_VisualStudio_Version>2.4.5</Xunit_Runner_VisualStudio_Version>
+        <Xunit_Analysers_Version>1.14.0</Xunit_Analysers_Version>
 
     </PropertyGroup>
 </Project>

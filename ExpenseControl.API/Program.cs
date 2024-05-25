@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-var allowOrigins = "PortalCors";
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.ConfigureLogging();

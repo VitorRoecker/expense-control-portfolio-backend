@@ -31,7 +31,7 @@ namespace ExpenseControl.Data.Repositories.Base
             Context.SaveChanges();
         }
 
-        public virtual async void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             Context.Entry(entity).State = EntityState.Modified;
             Context.SaveChanges();
