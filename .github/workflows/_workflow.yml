@@ -42,22 +42,26 @@ on:
 
 jobs:
   build:
+    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
     uses: ./.github/workflows/_build.yml
     with:
       project: ./${{ inputs.path }}/${{ inputs.project }}
   test:
+    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
     needs: [ build ]
     uses: ./.github/workflows/_test.yml
     with:
       test: ./${{ inputs.test }}
       project: ${{ inputs.project }}
   quality:
+    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
     needs: [ test ]
     uses: ./.github/workflows/_quality.yml
     with:
       path: $GITHUB_WORKSPACE/${{ inputs.path }}
     secrets: inherit
   security:
+    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
     needs: [ quality ]
     uses: ./.github/workflows/_security.yml
     with:
