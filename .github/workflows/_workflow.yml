@@ -40,6 +40,11 @@ on:
         description: 'CODACY_PROJECT_TOKEN'
         required: true
 
+permissions:
+  contents: write
+  actions: write
+  security-events: write
+
 jobs:
   build:
     if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}

@@ -12,14 +12,17 @@ on:
         required: true
 
 permissions:
-  actions: write
   contents: write
+  actions: write
   security-events: write
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    
+    permissions:
+      actions: write
+      contents: write
+      security-events: write
     
     steps:
       - name: Checkout
