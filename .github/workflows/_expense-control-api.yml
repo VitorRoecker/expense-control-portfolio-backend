@@ -6,6 +6,11 @@ on:
     types: [opened, reopened, synchronize, closed]
     branches: [ main, development]
 
+permissions:
+  contents: write
+  actions: write
+  security-events: write
+
 jobs:
   workflow:
     uses: ./.github/workflows/_workflow.yml
