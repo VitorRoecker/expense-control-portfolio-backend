@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(Microsoft_AspNetCore_Identity_EntityFrameworkCore_Version)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(Microsoft_EntityFrameworkCore_Version)" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.22">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(Microsoft_EntityFrameworkCore_Design_Version)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

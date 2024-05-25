@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Vitor Adriel Roecker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d926347eb4485bbf1fae1ac8054eb5e1f5d7671b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3503e3e20d9582500762a15d8e92eccd1940e6e4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Expense Control Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExpenseControl.Test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
