@@ -30,7 +30,7 @@ builder.Services.ConfigureAppSettings(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureDependecyInjection();
 builder.Services.ConfigureAuthentication(builder.Configuration);
-builder.Services.ConfigureCors(allowOrigins);
+builder.Services.ConfigureCors();
 
 var app = builder.Build();
 
@@ -51,7 +51,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(allowOrigins);
+app.UseCors(c => c.AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowAnyOrigin());
 
 app.UseAuthentication();
 app.UseAuthorization();
