@@ -66,18 +66,18 @@ jobs:
     with:
       project: $GITHUB_WORKSPACE/${{ inputs.project }}
     secrets: inherit
-  security:
-    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
-    needs: [ quality ]
-    uses: ./.github/workflows/_security.yml
-    with:
-      path: ./${{ inputs.path }}
-      project: ${{ inputs.project }}
-    secrets: inherit
-  #terraform-plan: 
-  #  needs: [ security ]
-  #  uses: ./.github/workflows/_terraform-plan.yml
+  #security:
+  #  if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
+  #  needs: [ quality ]
+  #  uses: ./.github/workflows/_security.yml
+  #  with:
+  #    path: ./${{ inputs.path }}
+  #    project: ${{ inputs.project }}
   #  secrets: inherit
+  terraform-plan: 
+    needs: [ quality ]
+    uses: ./.github/workflows/_terraform-plan.yml
+    secrets: inherit
   #terraform-apply:
   #  needs: [ terraform-plan ]
   #  uses: ./.github/workflows/_terraform-apply.yml
