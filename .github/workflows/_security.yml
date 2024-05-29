@@ -46,17 +46,17 @@ jobs:
         run: dotnet restore
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2.1.28
+        uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
           source-root: ${{ inputs.path }}
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v2.1.28
+        uses: github/codeql-action/autobuild@v3
         with:
           working-directory: ${{ inputs.path }}
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2.1.28
+        uses: github/codeql-action/analyze@v3
         with:
           checkout_path: ${{ inputs.path }}
