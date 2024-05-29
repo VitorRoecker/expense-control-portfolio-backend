@@ -44,6 +44,9 @@ permissions:
   contents: write
   actions: write
   security-events: write
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   build:
