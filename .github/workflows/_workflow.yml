@@ -66,6 +66,10 @@ jobs:
     with:
       project: $GITHUB_WORKSPACE/${{ inputs.project }}
     secrets: inherit
+  terraform-plan: 
+    needs: [ quality ]
+    uses: ./.github/workflows/_terraform-plan.yml
+    secrets: inherit
   #security:
   #  if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
   #  needs: [ quality ]
@@ -74,10 +78,6 @@ jobs:
   #    path: ./${{ inputs.path }}
   #    project: ${{ inputs.project }}
   #  secrets: inherit
-  terraform-plan: 
-    needs: [ quality ]
-    uses: ./.github/workflows/_terraform-plan.yml
-    secrets: inherit
   #terraform-apply:
   #  needs: [ terraform-plan ]
   #  uses: ./.github/workflows/_terraform-apply.yml
