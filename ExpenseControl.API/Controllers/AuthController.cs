@@ -1,4 +1,5 @@
 ﻿using ExpenseControl.Application.Interfaces;
+using ExpenseControl.Domain.Response;
 using ExpenseControl.Domain.Services.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace ExpenseControl.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new ApiResponse(true, ex.Message));
             }
         }
     }

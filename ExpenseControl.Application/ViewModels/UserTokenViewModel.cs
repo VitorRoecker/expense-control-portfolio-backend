@@ -5,16 +5,17 @@ namespace ExpenseControl.Application.ViewModels
 {
     public class UserTokenViewModel : BaseViewModel<UserTokenViewModel, UserToken>
     {
+        public Guid UserId { get; set; }
         public string? Token { get; set; }
-        public DateTime Expiration { get; set; }
+        public DateTime Expiration {  get; set; }
 
         public override UserToken ConvertToDomain()
-            => new() { Token = Token, Expiration = Expiration };
+            => new() { UserId = UserId, Token = Token, Expiration = Expiration };
 
         public override UserTokenViewModel ConvertToViewModel(UserToken userToken)
-            => new() { Token = userToken.Token, Expiration = userToken.Expiration };
+            => new() { UserId = userToken.UserId, Token = userToken.Token, Expiration = Expiration };
 
         public override UserToken CreateDomain()
-            => new() { Token = Token, Expiration = Expiration };
+            => new() { UserId = UserId, Token = Token, Expiration = Expiration };
     }
 }

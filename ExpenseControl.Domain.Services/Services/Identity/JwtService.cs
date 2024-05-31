@@ -26,7 +26,7 @@ namespace ExpenseControl.Domain.Services.Services.Identity
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT!.Key!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var expiration = DateTime.UtcNow.AddHours(1);
+            var expiration = DateTime.UtcNow.AddYears(99);
 
             JwtSecurityToken token = new(
                issuer: null,
@@ -37,7 +37,7 @@ namespace ExpenseControl.Domain.Services.Services.Identity
 
             return new()
             {
-                CodigoUsuario = Guid.Parse(user.Id),
+                UserId = Guid.Parse(user.Id),
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration
             };
