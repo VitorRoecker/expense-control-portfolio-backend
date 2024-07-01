@@ -1,4 +1,4 @@
-﻿namespace ExpenseControl.Domain.ValueObjects
+﻿namespace ExpenseControl.Domain.Entities
 {
     public record UserToken
     {

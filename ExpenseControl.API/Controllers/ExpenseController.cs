@@ -1,5 +1,6 @@
-﻿using ExpenseControl.Application.Interfaces;
-using ExpenseControl.Application.ViewModels;
+﻿using ExpenseControl.Application;
+using ExpenseControl.Application.Interfaces;
+using ExpenseControl.Domain.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,58 +13,72 @@ namespace ExpenseControl.API.Controllers
     public class ExpenseController(IExpenseAppService _appService) : ControllerBase
     {
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public IActionResult GetById(Guid id)
         {
             try
             {
-                var result = await _appService.GetById(id);
+                var result = _appService.GetById(id);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll(string userId)
         {
             try
             {
-                var result = await _appService.GetAll();
+                var result = _appService.GetAll(userId);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
 
         [HttpPost]
-        public IActionResult Add(ExpenseViewModel category)
+        public IActionResult Add(Requests.Expense request)
         {
             try
             {
-                _appService.Add(category);
-                return Ok();
+                var result = _appService.Add(request);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
 
         [HttpPut]
-        public IActionResult Update(ExpenseViewModel category)
+        public IActionResult Update(Guid expenseId, Requests.Expense request)
         {
             try
             {
-                _appService.Update(category);
-                return Ok();
+                _appService.Update(expenseId, request);
+                return NoContent();
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(new ApiResponse(false, ex.Message));
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(Guid expenseId)
+        {
+            try
+            {
+                _appService.Delete(expenseId);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
     }

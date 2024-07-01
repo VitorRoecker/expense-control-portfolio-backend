@@ -1,22 +1,19 @@
-﻿using ExpenseControl.Domain.Entities.Identity;
+﻿using ExpenseControl.Domain.Entities;
+using ExpenseControl.Domain.Entities.Identity;
 using ExpenseControl.Domain.Exceptions;
 using ExpenseControl.Domain.Services.Base;
 using ExpenseControl.Domain.Services.Interfaces.Services;
 using ExpenseControl.Domain.Services.Interfaces.Services.Identity;
-using ExpenseControl.Domain.Services.Requests;
-using ExpenseControl.Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 
 namespace ExpenseControl.Domain.Services.Services
 {
     public class UserService(UserManager<User> _userManager, IJwtService _jwtService) : IUserService
     {
-        public async Task<UserToken> CreateUser(CreateUserRequest userRequest)
+        public async Task<UserToken> CreateUser(Requests.CreateUser userRequest)
         {
             if (!Util.ValidaDocumento(userRequest.DocumentoFederal))
                 throw new ExpenseControlException("O documento federal informado não é válido. Revise as informações e tente novamente");
-
-            userRequest.DocumentoFederal = Util.DeixaNumeros(userRequest.DocumentoFederal);
 
             User? entity;
 
@@ -30,7 +27,7 @@ namespace ExpenseControl.Domain.Services.Services
 
             var user = new User
             {
-                UserName = userRequest.DocumentoFederal,
+                UserName = Util.DeixaNumeros(userRequest.DocumentoFederal),
                 Email = userRequest.Email,
                 PhoneNumber = userRequest.PhoneNumber,
             };

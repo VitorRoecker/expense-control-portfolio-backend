@@ -1,5 +1,5 @@
-﻿using ExpenseControl.Domain.Entities.Identity;
-using ExpenseControl.Domain.ValueObjects;
+﻿using ExpenseControl.Domain.Entities;
+using ExpenseControl.Domain.Entities.Identity;
 
 namespace ExpenseControl.Domain.Services.Interfaces.Services.Identity
 {

@@ -1,6 +1,6 @@
-﻿using ExpenseControl.Domain.Entities.Identity;
+﻿using ExpenseControl.Domain.Entities;
+using ExpenseControl.Domain.Entities.Identity;
 using ExpenseControl.Domain.Services.Interfaces.Services.Identity;
-using ExpenseControl.Domain.ValueObjects;
 using ExpenseControl.Infra.External_Dependence;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

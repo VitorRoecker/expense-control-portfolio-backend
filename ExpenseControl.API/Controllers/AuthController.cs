@@ -1,6 +1,6 @@
-﻿using ExpenseControl.Application.Interfaces;
+﻿using ExpenseControl.Application;
+using ExpenseControl.Application.Interfaces;
 using ExpenseControl.Domain.Response;
-using ExpenseControl.Domain.Services.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +14,7 @@ namespace ExpenseControl.API.Controllers
     {
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginRequest loginRequest)
+        public async Task<IActionResult> Login(Requests.Login loginRequest)
         {
             try
             {

@@ -15,7 +15,6 @@ namespace ExpenseControl.Infra.Mappings
             builder.Property(i => i.CategoryId).IsRequired();
             builder.Property(i => i.InclusionDate).IsRequired();
             builder.Property(i => i.EntryDate).IsRequired();
-            builder.Property(i => i.UserId).IsRequired().HasMaxLength(450);
 
             builder.HasOne(i => i.User)
                    .WithMany(u => u.Incomes)
