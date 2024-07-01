@@ -2,6 +2,7 @@
 #                    Databases                  #
 #################################################
 module "rds_instance" {
+  database_name                         = "expense-control"
   source                                = "./modules/rds"
   database_port                         = var.database_port
   multi_az                              = var.multi_az
