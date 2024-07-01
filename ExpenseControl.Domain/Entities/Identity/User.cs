@@ -6,7 +6,6 @@ namespace ExpenseControl.Domain.Entities.Identity
     {
         public ICollection<Expense>? Expenses { get; set; }
         public ICollection<Income>? Incomes { get; set; }
-        
-        public ICollection<CategoryUser>? CategoriesUsers { get; set; }
+        public ICollection<Category> Categories { get; set; }
     }
 }

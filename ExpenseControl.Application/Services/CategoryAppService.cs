@@ -1,32 +1,55 @@
 ﻿using ExpenseControl.Application.Interfaces;
-using ExpenseControl.Application.ViewModels;
+using ExpenseControl.Domain.Entities.Identity;
+using ExpenseControl.Domain.Enumerables;
 using ExpenseControl.Domain.Services.Interfaces.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace ExpenseControl.Application.Services
 {
-    public class CategoryAppService(ICategoryService _service) : ICategoryAppService
+    public class CategoryAppService(ICategoryService service, UserManager<User> userManager) : ICategoryAppService
     {
-        public async Task<CategoryViewModel> GetById(Guid id)
+        private readonly ICategoryService _service = service;
+        private readonly UserManager<User> _userManager = userManager;
+
+        public async Task<Responses.Identifier> Add(Requests.Category request)
         {
-            var entity = await _service.GetById(id) ?? throw new Exception("Category not found");
+            var hasWithName = _service.GetAll().Where(x => x.UserId == request.UserId).Any(x => x.Name == request.Name);
 
-            return new CategoryViewModel().ConvertToViewModel(entity);
+            var user = await _userManager.FindByIdAsync(request.UserId);
+            if (user is null)
+                throw new Exception("Usuário não encontrado.");
+
+            if (hasWithName)
+                throw new Exception("Categoria ja cadastrada com este nome.");
+
+            return new(_service.Add(request).Id);
         }
-
-        public async Task<List<CategoryViewModel>> GetAll()
-        {
-            var result = await _service.GetAll();
-
-            return result.Select(x => new CategoryViewModel().ConvertToViewModel(x)).ToList();
-        }
-
-        public void Add(CategoryViewModel income)
-            => _service.Add(income.CreateDomain());
-
-        public void Update(CategoryViewModel income)
-            => _service.Update(income.ConvertToDomain());
 
         public void Delete(Guid id)
-            => _service.Delete(id);
+        {
+            var entity = _service.GetById(id) ?? throw new Exception("Categoria não encontrada.");
+            _service.Delete(entity);
+        }
+
+        public IEnumerable<Responses.Category> GetAll(string UserId)
+        {
+            var categories = _service.GetAll().Where(x => x.UserId == UserId) ?? throw new Exception("Nenhuma categoria cadastrada.");
+
+            return categories.Select(x => (Responses.Category)x).ToList();
+        }
+
+        public Responses.Category GetById(Guid id)
+            => _service.GetById(id) ?? throw new Exception("Categoria não encontrada.");
+
+        public void Update(Guid categoryId, Requests.Category request)
+        {
+            var category = _service.GetById(categoryId) ?? throw new Exception("Categoria não encontrada.");
+
+            category.Name = request.Name;
+            category.Description = request.Description;
+            category.Type = (CategoryTypeEnum)request.Type;
+
+            _service.Update(category);
+        }
     }
 }

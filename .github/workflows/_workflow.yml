@@ -40,33 +40,46 @@ on:
         description: 'CODACY_PROJECT_TOKEN'
         required: true
 
+permissions:
+  contents: write
+  actions: write
+  security-events: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   build:
+    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
     uses: ./.github/workflows/_build.yml
     with:
       project: ./${{ inputs.path }}/${{ inputs.project }}
   test:
+    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
     needs: [ build ]
     uses: ./.github/workflows/_test.yml
     with:
       test: ./${{ inputs.test }}
       project: ${{ inputs.project }}
+    secrets: inherit
   quality:
+    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
     needs: [ test ]
     uses: ./.github/workflows/_quality.yml
     with:
-      path: $GITHUB_WORKSPACE/${{ inputs.path }}
+      project: $GITHUB_WORKSPACE/${{ inputs.project }}
     secrets: inherit
-  security:
+  terraform-plan: 
     needs: [ quality ]
-    uses: ./.github/workflows/_security.yml
-    with:
-      path: ./${{ inputs.path }}
-      project: ${{ inputs.project }}
+    uses: ./.github/workflows/_terraform-plan.yml
     secrets: inherit
-  #terraform-plan: 
-  #  needs: [ security ]
-  #  uses: ./.github/workflows/_terraform-plan.yml
+  #security:
+  #  if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
+  #  needs: [ quality ]
+  #  uses: ./.github/workflows/_security.yml
+  #  with:
+  #    path: ./${{ inputs.path }}
+  #    project: ${{ inputs.project }}
   #  secrets: inherit
   #terraform-apply:
   #  needs: [ terraform-plan ]

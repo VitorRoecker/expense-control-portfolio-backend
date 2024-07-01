@@ -4,16 +4,18 @@
 
 /.vs
 /ExpenseControl.API/obj
-/ExpenseControl.Application/obj
-/ExpenseControl.Domain/obj
-/ExpenseControl.Infra/obj
 /ExpenseControl.API/bin/Debug/net6.0
+/ExpenseControl.Application/obj
 /ExpenseControl.Application/bin/Debug/net6.0
+/ExpenseControl.Domain/obj
 /ExpenseControl.Domain/bin/Debug/net6.0
+/ExpenseControl.Infra/obj
 /ExpenseControl.Infra/bin/Debug/net6.0
 /ExpenseControl.CrossCutting/obj
+/ExpenseControl.CrossCutting/bin/Debug/net6.0
 /ExpenseControl.Domain.Services/obj
 /ExpenseControl.Domain.Services/bin/Debug/net6.0
-/ExpenseControl.CrossCutting/bin/Debug/net6.0
-/ExpenseControl.Data/bin/Debug/net6.0
 /ExpenseControl.Data/obj
+/ExpenseControl.Data/bin/Debug/net6.0
+/ExpenseControl.Test/obj
+/ExpenseControl.Test/bin/Debug/net6.0

@@ -12,7 +12,7 @@ on:
         type: string
 
 jobs:
-  analyze:
+  security:
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -29,7 +29,9 @@ jobs:
         uses: actions/checkout@v3.1.0
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3.0.2
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
 
       - name: Cache dependencies
         uses: actions/cache@v3.0.11
@@ -44,17 +46,17 @@ jobs:
         run: dotnet restore
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2.1.28
+        uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
           source-root: ${{ inputs.path }}
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v2.1.28
+        uses: github/codeql-action/autobuild@v3
         with:
           working-directory: ${{ inputs.path }}
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2.1.28
+        uses: github/codeql-action/analyze@v3
         with:
           checkout_path: ${{ inputs.path }}

@@ -9,7 +9,7 @@ namespace ExpenseControl.API.Extensions
         {
             services.AddDbContext<DatabaseContext>(options =>
             {
-                options.UseSqlServer(configuration.GetValue<string>("AppSettings:ConnectionStrings:ExpenseControlDB")!);
+                options.UseSqlServer(configuration.GetValue<string>("AppSettings:ConnectionStrings:Default")!);
             });
         }
     }

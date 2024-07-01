@@ -10,22 +10,29 @@ on:
         description: 'The project passed from the caller workflow'
         required: true
         type: string
+    secrets:
+      CODACY_PROJECT_TOKEN:
+        description: 'CODACY_PROJECT_TOKEN'
+        required: true
+
 jobs:
   test:
-    name: ${{ matrix.os }}
+    name: Test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ ubuntu-latest ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3.0.2
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
 
       - name: Cache dependencies
-        uses: actions/cache@v3.0.11
+        uses: actions/cache@v4
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -33,9 +40,57 @@ jobs:
             ${{ runner.os }}-nuget  
 
       - name: Install dependencies
-        working-directory: ${{ inputs.project }}
+        working-directory: ${{ inputs.test }}
         run: dotnet restore
 
       - name: Test
         working-directory: ${{ inputs.test }}
-        run: dotnet test --no-restore --verbosity normal
+        run: |
+          dotnet test --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/Coverage/cobertura.xml
+
+      - name: Check if coverage file exists
+        id: check-coverage-file
+        run: |
+          if [[ ! -s "${{ inputs.test }}/TestResults/Coverage/cobertura.xml" ]]; then
+            echo "Coverage file does not exists or is empty. Skipping Codacy upload."
+            echo "upload=false" >> $GITHUB_OUTPUT
+          else
+            echo "upload=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run codacy-coverage-reporter
+        if: steps.check-coverage-file.outputs.upload == 'true'
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          api-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: ${{ inputs.test }}/TestResults/Coverage/cobertura.xml
+
+#jobs:
+#  test:
+#    name: ${{ matrix.os }}
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        os: [ ubuntu-latest ]
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3.1.0
+#
+#      - name: Setup .NET
+#        uses: actions/setup-dotnet@v3.0.2
+#
+#      - name: Cache dependencies
+#        uses: actions/cache@v3.0.11
+#        with:
+#          path: ~/.nuget/packages
+#          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-nuget  
+#
+#      - name: Install dependencies
+#        working-directory: ${{ inputs.project }}
+#        run: dotnet restore
+#
+#      - name: Test
+#        working-directory: ${{ inputs.test }}
+#        run: dotnet test --no-restore --verbosity normal

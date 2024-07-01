@@ -1,5 +1,6 @@
-﻿using ExpenseControl.Application.Interfaces;
-using ExpenseControl.Domain.Services.Requests;
+﻿using ExpenseControl.Application;
+using ExpenseControl.Application.Interfaces;
+using ExpenseControl.Domain.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,7 @@ namespace ExpenseControl.API.Controllers
     {
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<IActionResult> Register(CreateUserRequest createUserRequest)
+        public async Task<IActionResult> Register(Requests.CreateUser createUserRequest)
         {
             try
             {
@@ -22,7 +23,7 @@ namespace ExpenseControl.API.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
     }

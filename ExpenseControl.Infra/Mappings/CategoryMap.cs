@@ -14,12 +14,10 @@ namespace ExpenseControl.Infra.Mappings
             builder.Property(c => c.Description).HasMaxLength(255);
             builder.Property(c => c.Type).IsRequired();
 
-            builder.HasMany(c => c.CategoriesUsers)
-                   .WithOne(cu => cu.Category)
-                   .HasForeignKey(cu => cu.CategoryId)
+            builder.HasOne(e => e.User)
+                   .WithMany(u => u.Categories)
+                   .HasForeignKey(e => e.UserId)
                    .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasIndex(c => c.CategoryUserId);
         }
     }
 }

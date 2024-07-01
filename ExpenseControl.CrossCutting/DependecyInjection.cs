@@ -26,7 +26,6 @@ namespace ExpenseControl.CrossCutting
             services.AddScoped<IUserAppService, UserAppService>();
             services.AddScoped<IAuthAppService, AuthAppService>();
             services.AddScoped<ICategoryAppService, CategoryAppService>();
-            services.AddScoped<ICategoryUserAppService, CategoryUserAppService>();
             services.AddScoped<IExpenseAppService, ExpenseAppService>();
             services.AddScoped<IIncomeAppService, IncomeAppService>();
 
@@ -40,7 +39,6 @@ namespace ExpenseControl.CrossCutting
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICategoryUserService, CategoryUserService>();
             services.AddScoped<IExpenseService, ExpenseService>();
             services.AddScoped<IIncomeService, IncomeService>();
 
@@ -58,7 +56,6 @@ namespace ExpenseControl.CrossCutting
             #region Scoped
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<ICategoryUserRepository, CategoryUserRepository>();
             services.AddScoped<IExpenseRepository, ExpenseRepository>();
             services.AddScoped<IIncomeRepository, IncomeRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

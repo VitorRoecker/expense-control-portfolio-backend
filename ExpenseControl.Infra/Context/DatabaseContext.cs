@@ -18,7 +18,6 @@ namespace ExpenseControl.Infra.Context
 
             #region Mappings
 
-            builder.ApplyConfiguration(new CategoryUserMap());
             builder.ApplyConfiguration(new ExpenseMap());
             builder.ApplyConfiguration(new IncomeMap());
             builder.ApplyConfiguration(new CategoryMap());

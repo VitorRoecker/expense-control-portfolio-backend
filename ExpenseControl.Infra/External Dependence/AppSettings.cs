@@ -13,6 +13,6 @@
 
     public class ConnectionStrings
     {
-        public string? ExpenseControlDB { get; set; }
+        public string? Default { get; set; }
     }
 }
