@@ -88,10 +88,6 @@ jobs:
     secrets: inherit
   deploy:
     needs: [ security ]
-    if: ${{ github.event.pull_request.merged && (github.event.pull_request.base.ref == 'development') }}
+    if: ${{ github.event.pull_request.merged && (github.event.pull_request.base.ref == 'main') }}
     uses: ./.github/workflows/_deploy.yml
     secrets: inherit
-    with:
-      product: ${{ inputs.product }}
-      project: ${{ inputs.project }}
-      service-name: ${{ inputs.service-name }}
