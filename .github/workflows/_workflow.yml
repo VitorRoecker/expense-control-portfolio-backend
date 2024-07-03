@@ -39,6 +39,15 @@ on:
       CODACY_PROJECT_TOKEN:
         description: 'CODACY_PROJECT_TOKEN'
         required: true
+      HEROKU_API_KEY:
+        description: 'The heroku api key'
+        required: true
+      HEROKU_APP_NAME:
+        description: 'The heroku app name'
+        required: true
+      HEROKU_EMAIL:
+        description: 'The heroku email'
+        required: true
 
 permissions:
   contents: write
@@ -77,21 +86,12 @@ jobs:
       path: ./${{ inputs.path }}
       project: ${{ inputs.project }}
     secrets: inherit
-  #terraform-plan: 
-  #  needs: [ quality ]
-  #  uses: ./.github/workflows/_terraform-plan.yml
-  #  secrets: inherit
-  #terraform-apply:
-  #  needs: [ terraform-plan ]
-  #  uses: ./.github/workflows/_terraform-apply.yml
-  #  with:
-  #    destroy: ${{ inputs.destroy }}
-  #  secrets: inherit
-  #deploy:
-  #  needs: [ terraform-apply ]
-  #  uses: ./.github/workflows/_deploy.yml
-  #  secrets: inherit
-  #  with:
-  #    product: ${{ inputs.product }}
-  #    project: ${{ inputs.project }}
-  #    service-name: ${{ inputs.service-name }}
+  deploy:
+    needs: [ security ]
+    if: ${{ github.event.pull_request.merged && (github.event.pull_request.base.ref == 'production') }}
+    uses: ./.github/workflows/_deploy.yml
+    secrets: inherit
+    with:
+      product: ${{ inputs.product }}
+      project: ${{ inputs.project }}
+      service-name: ${{ inputs.service-name }}
