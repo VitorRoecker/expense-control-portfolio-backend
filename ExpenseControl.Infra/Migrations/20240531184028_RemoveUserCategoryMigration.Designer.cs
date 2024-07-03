@@ -4,6 +4,7 @@ using ExpenseControl.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpenseControl.Infra.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240531184028_RemoveUserCategoryMigration")]
+    partial class RemoveUserCategoryMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,12 +44,7 @@ namespace ExpenseControl.Infra.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Category");
                 });
@@ -181,6 +178,8 @@ namespace ExpenseControl.Infra.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -323,16 +322,6 @@ namespace ExpenseControl.Infra.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ExpenseControl.Domain.Entities.Category", b =>
-                {
-                    b.HasOne("ExpenseControl.Domain.Entities.Identity.User", "User")
-                        .WithMany("Categories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ExpenseControl.Domain.Entities.Expense", b =>
                 {
                     b.HasOne("ExpenseControl.Domain.Entities.Identity.User", "User")
@@ -348,7 +337,8 @@ namespace ExpenseControl.Infra.Migrations
                     b.HasOne("ExpenseControl.Domain.Entities.Identity.User", "User")
                         .WithMany("Incomes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -406,8 +396,6 @@ namespace ExpenseControl.Infra.Migrations
 
             modelBuilder.Entity("ExpenseControl.Domain.Entities.Identity.User", b =>
                 {
-                    b.Navigation("Categories");
-
                     b.Navigation("Expenses");
 
                     b.Navigation("Incomes");

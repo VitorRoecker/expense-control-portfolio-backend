@@ -5,11 +5,11 @@ namespace ExpenseControl.API.Extensions
 {
     public static class DatabaseSetup
     {
-        public static void ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureDatabase(this IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(options =>
             {
-                options.UseSqlServer(configuration.GetValue<string>("AppSettings:ConnectionStrings:ExpenseControlDB")!);
+                options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
             });
         }
     }

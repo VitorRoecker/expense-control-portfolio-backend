@@ -1,32 +1,60 @@
 ﻿using ExpenseControl.Application.Interfaces;
-using ExpenseControl.Application.ViewModels;
+using ExpenseControl.Domain.Entities.Identity;
+using ExpenseControl.Domain.Enumerables;
 using ExpenseControl.Domain.Services.Interfaces.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace ExpenseControl.Application.Services
 {
-    public class IncomeAppService(IIncomeService _service) : IIncomeAppService
+    public class IncomeAppService(IIncomeService _service,
+                                  ICategoryService _categoryService,
+                                  UserManager<User> _userManager) : IIncomeAppService
     {
-        public async Task<IncomeViewModel> GetById(Guid id)
-        {
-            var entity = await _service.GetById(id) ?? throw new Exception("Income not found");
+        public Responses.Income GetById(Guid id)
+            => _service.GetById(id) ?? throw new Exception("Renda não encontrado.");
 
-            return new IncomeViewModel().ConvertToViewModel(entity);
+        public IEnumerable<Responses.Income> GetAll(string UserId)
+        {
+            var entities = _service.GetAll().Where(x => x.UserId == UserId) ?? throw new Exception("Nenhuma renda cadastrada para esta conta.");
+
+            return entities.Select(x => (Responses.Income)x).ToList();
         }
 
-        public async Task<List<IncomeViewModel>> GetAll()
+        public async Task<Responses.Identifier> Add(Requests.Income request)
         {
-            var result = await _service.GetAll();
+            var hasWithName = _service.GetAll().Where(x => x.UserId == request.UserId)
+                                               .Any(x => x.Amount == request.Amount && x.Description == request.Description);
 
-            return result.Select(x => new IncomeViewModel().ConvertToViewModel(x)).ToList();
+            var user = await _userManager.FindByIdAsync(request.UserId);
+            if (user is null)
+                throw new Exception("Usuário não encontrado.");
+
+            var category = _categoryService.GetById(request.CategoryId);
+
+            if (category is null)
+                throw new Exception("Categoria não encontrada");
+
+
+            if (hasWithName)
+                throw new Exception("Ja existe uma renda com este valor e descrição.");
+
+            return new(_service.Add(request).Id);
         }
 
-        public void Add(IncomeViewModel income)
-            => _service.Add(income.CreateDomain());
+        public void Update(Guid incomeId, Requests.Income request)
+        {
+            var entity = _service.GetById(incomeId) ?? throw new Exception("Gasto não encontrado");
 
-        public void Update(IncomeViewModel income)
-            => _service.Update(income.ConvertToDomain());
+            entity.Description = request.Description;
+            entity.Type = (TransactionTypeEnum)request.Type;
+
+            _service.Update(entity);
+        }
 
         public void Delete(Guid id)
-            => _service.Delete(id);
+        {
+            var entity = _service.GetById(id) ?? throw new Exception("Gasto não encontrado.");
+            _service.Delete(entity);
+        }
     }
 }
