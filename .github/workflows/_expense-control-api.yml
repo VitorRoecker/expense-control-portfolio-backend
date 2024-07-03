@@ -4,6 +4,15 @@ run-name: Expense Control Workflow
 on:
   pull_request:
     types: [opened, reopened, synchronize, closed]
+    branches: [ main, development]
+
+permissions:
+  contents: write
+  actions: write
+  security-events: write
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
   workflow:
@@ -20,3 +29,6 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ROLE: ${{ secrets.AWS_ROLE }}
       CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+      HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}

@@ -1,8 +1,8 @@
-﻿namespace ExpenseControl.Domain.ValueObjects
+﻿namespace ExpenseControl.Domain.Entities
 {
     public record UserToken
     {
-        public Guid CodigoUsuario { get; set; }
+        public Guid UserId { get; set; }
         public string? Token { get; set; }
         public DateTime Expiration { get; set; }
     }

@@ -1,6 +1,6 @@
-﻿using ExpenseControl.Application.Interfaces;
-using ExpenseControl.Application.ViewModels;
-using ExpenseControl.Domain.Services.Requests.Income;
+﻿using ExpenseControl.Application;
+using ExpenseControl.Application.Interfaces;
+using ExpenseControl.Domain.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,68 +13,58 @@ namespace ExpenseControl.API.Controllers
     public class IncomeController(IIncomeAppService _appService) : ControllerBase
     {
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public ActionResult GetById(Guid id)
         {
             try
             {
-                var result = await _appService.GetById(id);
+                var result = _appService.GetById(id);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll(string userId)
         {
             try
             {
-                var result = await _appService.GetAll();
+                var result = _appService.GetAll(userId);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
 
         [HttpPost]
-        public IActionResult Add(CreateIncomeRequest request)
+        public IActionResult Add(Requests.Income request)
         {
             try
             {
-                var viewModel = new IncomeViewModel
-                {
-                    Amount = request.Amount,
-                    CategoryId = request.CategoryId,
-                    Description = request.Description,
-                    EntryDate = request.EntryDate,
-                    Type = request.Type,
-                    UserId = request.UserId,
-                };
-
-                _appService.Add(viewModel);
-                return Ok();
+                _appService.Add(request);
+                return NoContent();
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
 
         [HttpPut]
-        public IActionResult Update(IncomeViewModel category)
+        public IActionResult Update(Guid incomeId, Requests.Income request)
         {
             try
             {
-                _appService.Update(category);
-                return Ok();
+                _appService.Update(incomeId, request);
+                return NoContent();
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
     }

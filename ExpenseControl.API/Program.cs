@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-var allowOrigins = "PortalCors";
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.ConfigureLogging();
@@ -18,14 +16,13 @@ builder.Services.AddControllers(opt =>
     opt.Filters.Add(new AuthorizeFilter(policy));
 });
 
-builder.Services.ConfigureSwagger();
-
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
                      .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                      .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
                      .AddEnvironmentVariables();
 
-builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.ConfigureSwagger();
+builder.Services.ConfigureDatabase();
 builder.Services.ConfigureAppSettings(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureDependecyInjection();
