@@ -2,19 +2,6 @@ name: _Deploy
 
 on:
   workflow_call:
-    inputs:
-      product:
-        description: 'The name of product passed from the caller workflow'
-        required: true
-        type: string
-      project:
-        description: 'The project passed from the caller workflow'
-        required: true
-        type: string
-      service-name:
-        description: 'The name of service passed from the caller workflow'
-        required: true
-        type: string
     secrets:
       HEROKU_API_KEY:
         description: 'The heroku api key'
@@ -28,6 +15,7 @@ on:
 
 jobs:
   deploy:
+    name: "Deploy"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -36,6 +24,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+
   #deploy:
   #  name: "Deploy"
   #  runs-on: ${{ matrix.os }}

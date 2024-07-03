@@ -1,4 +1,4 @@
-name: Security
+name: _Security
 on:
   workflow_call:
     inputs:
