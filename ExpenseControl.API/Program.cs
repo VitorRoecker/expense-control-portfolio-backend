@@ -22,7 +22,7 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
                      .AddEnvironmentVariables();
 
 builder.Services.ConfigureSwagger();
-builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.ConfigureDatabase();
 builder.Services.ConfigureAppSettings(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureDependecyInjection();
