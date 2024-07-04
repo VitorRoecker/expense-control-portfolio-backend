@@ -67,5 +67,19 @@ namespace ExpenseControl.API.Controllers
                 return BadRequest(new ApiResponse(false, ex.Message));
             }
         }
+
+        [HttpDelete]
+        public IActionResult Delete(Guid incomeId)
+        {
+            try
+            {
+                _appService.Delete(incomeId);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse(false, ex.Message));
+            }
+        }
     }
 }
