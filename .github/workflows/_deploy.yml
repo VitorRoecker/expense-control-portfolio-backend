@@ -53,8 +53,8 @@ jobs:
         working-directory: ${{ inputs.project }}
         run: dotnet restore
 
-      - name: Update AWS Lambda configuration
-        run: aws lambda update-function-configuration --function-name SuaFuncaoLambda --environment Variables="{CONNECTION_STRING=${{ secrets.CONNECTION_STRING}}, JWT_TOKEN=${{ secrets.JWT_TOKEN}}}"
+      #- name: Update AWS Lambda configuration
+      #  run: aws lambda update-function-configuration --function-name SuaFuncaoLambda --environment Variables="{CONNECTION_STRING=${{ secrets.CONNECTION_STRING }}, JWT_TOKEN=${{ secrets.JWT_TOKEN }}}"
         
       - name: Build
         working-directory: ${{ inputs.project }}
