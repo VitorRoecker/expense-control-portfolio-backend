@@ -90,4 +90,6 @@ jobs:
   deploy:
     needs: [ security ]
     uses: ./.github/workflows/_deploy.yml
+    with:
+      project: ${{ inputs.project }}
     secrets: inherit

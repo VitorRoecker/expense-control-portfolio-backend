@@ -2,6 +2,11 @@ name: _Deploy
 
 on:
   workflow_call:
+    inputs:
+      project:
+        description: 'The *csproj project path passed from the caller workflow'
+        required: true
+        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'The AWS access key id'
@@ -21,17 +26,31 @@ jobs:
       region: us-east-1
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
-    - name: AWS CLI
-      run: dotnet tool install -g Amazon.Lambda.Tools
-    - name: Restore dependencies
-      run: dotnet restore 
-    - name: Build
-      run: dotnet build --no-restore 
-    - name: Deploy to Lambda
-      working-directory: ./
-      run: dotnet lambda deploy-serverless --region us-east-1 --s3-bucket expense-control-api --function-name expense-control
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
+    
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3.0.2
+
+      - name: Cache dependencies
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget  
+      
+      - name: AWS CLI
+        run: dotnet tool install -g Amazon.Lambda.Tools
+
+      - name: Install dependencies
+        working-directory: ${{ inputs.project }}
+        run: dotnet restore
+        
+      - name: Build
+        working-directory: ${{ inputs.project }}
+        run: dotnet build --configuration Release --no-restore
+      
+      - name: Deploy to Lambda
+        working-directory: ${{ inputs.project }}
+        run: dotnet lambda deploy-serverless --region us-east-1 --s3-bucket expense-control-api --function-name expense-control
