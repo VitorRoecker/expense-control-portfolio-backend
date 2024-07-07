@@ -6,7 +6,7 @@ namespace ExpenseControl.API.Extensions
 {
     public static class AuthenticationSetup
     {
-        public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureAuthentication(this IServiceCollection services)
         {
             services.AddAuthentication(options =>
             {
@@ -18,7 +18,7 @@ namespace ExpenseControl.API.Extensions
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration.GetSection("AppSettings:JWT:Key").Value!)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_TOKEN"))),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };

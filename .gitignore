@@ -19,3 +19,13 @@
 /ExpenseControl.Data/bin/Debug/net6.0
 /ExpenseControl.Test/obj
 /ExpenseControl.Test/bin/Debug/net6.0
+/ExpenseControl.API/bin/Release/net6.0
+/ExpenseControl.API/.config
+/ExpenseControl.Application/bin/Release/net6.0
+/ExpenseControl.CrossCutting/bin/Release/net6.0
+/ExpenseControl.Data/bin/Release/net6.0
+/ExpenseControl.Domain/bin/Release/net6.0
+/ExpenseControl.Domain.Services/bin/Release/net6.0
+/ExpenseControl.Infra/bin/Release/net6.0
+/ExpenseControl.API/aws-lambda-tools-defaults.json
+/ExpenseControl.API/Properties/launchSettings.json
