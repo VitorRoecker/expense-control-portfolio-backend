@@ -1,4 +1,5 @@
-﻿using ExpenseControl.Domain.Enumerables;
+﻿using AutoMapper;
+using ExpenseControl.Domain.Enumerables;
 using DomainRequest = ExpenseControl.Domain.Services.Requests;
 
 namespace ExpenseControl.Application
@@ -45,10 +46,16 @@ namespace ExpenseControl.Application
                 };
         }
 
-        public record CreateUser(string DocumentoFederal, string Email, string PhoneNumber, string Password)
+        public record Register(string DocumentoFederal, string Email, string PhoneNumber, string Password)
         {
-            public static implicit operator DomainRequest.CreateUser(CreateUser request)
+            public static implicit operator DomainRequest.CreateUser(Register request)
                 => new(request.DocumentoFederal, request.Email, request.PhoneNumber, request.Password);
+        }
+
+        public record DeleteUser(string UserId)
+        {
+            public static implicit operator DomainRequest.DeleteUser(DeleteUser request)
+                => new(request.UserId);
         }
 
         public record Login(string DocumentoFederal, string Password)

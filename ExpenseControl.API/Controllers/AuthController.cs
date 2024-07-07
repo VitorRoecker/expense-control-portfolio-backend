@@ -18,7 +18,6 @@ namespace ExpenseControl.API.Controllers
         {
             try
             {
-                Console.WriteLine("Esta aqui");
                 var result = await _authAppService.Login(loginRequest);
                 return Ok(result);
             }

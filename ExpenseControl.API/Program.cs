@@ -2,6 +2,8 @@ using ExpenseControl.API.Extensions;
 using ExpenseControl.API.Middleware;
 using ExpenseControl.CrossCutting;
 using ExpenseControl.Infra.Context;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,10 @@ builder.Services.AddControllers(opt =>
     var policy = new AuthorizationPolicyBuilder("Bearer").RequireAuthenticatedUser().Build();
     opt.Filters.Add(new AuthorizeFilter(policy));
 });
+
+builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters()
+                .AddValidatorsFromAssemblyContaining<Program>();
 
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 builder.Services.ConfigureSwagger();
