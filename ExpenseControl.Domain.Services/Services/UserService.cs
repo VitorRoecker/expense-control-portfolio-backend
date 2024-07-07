@@ -19,11 +19,11 @@ namespace ExpenseControl.Domain.Services.Services
 
             entity = await _userManager.FindByEmailAsync(userRequest.Email);
             if (entity is not null)
-                throw new ExpenseControlException("O email informado já está sendo utilizado por outro usuário");
+                throw new ExpenseControlException("Email já cadastrado");
 
             entity = await _userManager.FindByNameAsync(userRequest.DocumentoFederal);
             if (entity is not null)
-                throw new ExpenseControlException("O documento federal informado já está sendo utilizado por outro usuário");
+                throw new ExpenseControlException("O documento já cadastrado.");
 
             var user = new User
             {

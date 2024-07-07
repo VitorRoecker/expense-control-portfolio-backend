@@ -1,4 +1,5 @@
 using ExpenseControl.API.Extensions;
+using ExpenseControl.API.Middleware;
 using ExpenseControl.CrossCutting;
 using ExpenseControl.Infra.Context;
 using Microsoft.AspNetCore.Authorization;
@@ -16,18 +17,14 @@ builder.Services.AddControllers(opt =>
     opt.Filters.Add(new AuthorizeFilter(policy));
 });
 
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
-                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                     .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
-                     .AddEnvironmentVariables();
-
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 builder.Services.ConfigureSwagger();
 builder.Services.ConfigureDatabase();
-builder.Services.ConfigureAppSettings(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureDependecyInjection();
-builder.Services.ConfigureAuthentication(builder.Configuration);
+builder.Services.ConfigureAuthentication();
 builder.Services.ConfigureCors();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -39,14 +36,11 @@ var context = services.GetRequiredService<DatabaseContext>();
 await context.Database.MigrateAsync();
 await context.Database.EnsureCreatedAsync();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
+app.UseMiddleware(typeof(ExceptionMiddleware));
 
 app.UseCors(c => c.AllowAnyHeader()
                   .AllowAnyMethod()
@@ -54,7 +48,7 @@ app.UseCors(c => c.AllowAnyHeader()
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapHealthChecks("/healthz");
 app.MapControllers();
 
 try

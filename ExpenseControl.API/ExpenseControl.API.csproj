@@ -3,9 +3,11 @@
   <PropertyGroup>
     <UserSecretsId>66cee94d-ac5e-459d-87e8-54fa8bfe2e1b</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<AWSProjectType>Lambda</AWSProjectType>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" Version="1.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="$(Microsoft_AspNetCore_Authentication_JwtBearer_Version)" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(Microsoft_AspNetCore_Authentication_OpenIdConnect_Version)" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(Microsoft_AspNetCore_Identity_EntityFrameworkCore_Version)" />
@@ -17,6 +19,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="$(Microsoft_Extensions_Configuration_Binder_Version)" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="$(Microsoft_Extensions_Logging_Version)" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="$(Microsoft_VisualStudio_Azure_Containers_Tools_Targets_Version)" />
     <PackageReference Include="Newtonsoft.Json" Version="$(Newtonsoft_Json_Version)" />
     <PackageReference Include="Serilog.AspNetCore" Version="$(Serilog_AspNetCore_Version)" />
