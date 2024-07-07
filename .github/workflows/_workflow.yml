@@ -45,6 +45,12 @@ on:
       AWS_SECRET_ACCESS_KEY:
         description: 'The AWS secret access key'
         required: true
+      CONNECTION_STRING:
+        description: 'Database connection string'
+        required: true
+      JWT_TOKEN:
+        description: 'The JWT Token for api authentication'
+        required: true
 
 permissions:
   contents: write

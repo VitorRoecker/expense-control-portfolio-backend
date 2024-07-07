@@ -1,0 +1,21 @@
+
+{
+    "region" : "us-east-1",
+    "profile" : "ExpenseControl-Profile",
+    "configuration" : "Release",
+    "framework"     : "net6.0",
+    "function-name" : "expense-control",
+    "package-type"  : "Zip",
+    "function-handler" : "ExpenseControl.API",
+    "function-memory-size" : 256,
+    "function-role"        : "arn:aws:iam::142098356841:role/lambda_exec_expense-control",
+    "function-timeout"     : 500,
+    "function-runtime"     : "dotnet6",
+    "function-architecture" : "x86_64",
+    "function-subnets"      : "",
+    "function-security-groups" : "",
+    "tracing-mode"             : "PassThrough",
+    "dockerfile"               : "Dockerfile",
+    "image-tag"                : "",
+    "function-description"     : ""
+}
