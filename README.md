@@ -1,37 +1,30 @@
 <h1 align="center">Personal Finance Management App - Backend</h1>
 
-# 📝 Overview
-> - This repository contains the backend code for the Personal Finance Management App. This backend is developed using C# with Layered Architecture and Entity Framework to provide robust, scalable, and maintainable solutions for managing personal finances.
+# 📝 Visão Geral
+> - Este repositório contém o código backend para o Aplicativo de Gerenciamento de Finanças Pessoais. Este backend é desenvolvido usando C# com Arquitetura em Camadas e Entity Framework para fornecer soluções robustas e sustentáveis para o gerenciamento de finanças pessoais.
 
-# 💻 Tech Stack
-> - Language: C#
-> - Architecture: Layered Architecture
+# 💻 Tecnologias
+> - Linguagem: C#
+> - Arquitetura: Layered Architecture
 > - ORM: Entity Framework
-> - Database: SQL Server
-> - Authentication: Identity
+> - Banco de dados: SQL Server
+> - Autenticallção: Identity
 
-# 🚀 Getting Started
+# 🚀 Primeiros passos
 
-### Clone the backend repository:
+### Clone o repositório:
 ```cmd
-git clone <backend-repository-url>
+git clone https://github.com/VitorRoecker/expense-control-portfolio-backend.git
 ```
-### Navigate to the project directory: 
+### Navegue até o diretório do projeto: 
 ```cmd
-cd <backend-project-directory>
+cd <backend-project-diretorio>
 ```
-### Restore NuGet packages: 
+### Restaurar pacotes NuGet: 
 ```cmd
 dotnet restore
 ```
-### Update database schema:
-```cmd
-dotnet ef database update
-```
-### Run the application: 
+### Executar a aplicação: 
 ```cmd
 dotnet run
 ```
-
-##
-Thank you for considering or using this project! Feel free to star ⭐ the repository if you find it helpful!

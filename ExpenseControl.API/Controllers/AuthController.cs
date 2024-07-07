@@ -26,5 +26,12 @@ namespace ExpenseControl.API.Controllers
                 return BadRequest(new ApiResponse(true, ex.Message));
             }
         }
+
+        [HttpGet()]
+        [AllowAnonymous]
+        public IActionResult Get()
+        {
+            return Ok("Teste");
+        }
     }
 }

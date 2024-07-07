@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using ExpenseControl.Domain.Enumerables;
+﻿using ExpenseControl.Domain.Enumerables;
 using DomainRequest = ExpenseControl.Domain.Services.Requests;
 
 namespace ExpenseControl.Application
