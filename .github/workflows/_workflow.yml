@@ -89,7 +89,7 @@ jobs:
     secrets: inherit
   deploy:
     needs: [ quality ]
-    if: ${{ inputs.destroy == false && (github.event.pull_request.merged && (github.event.pull_request.base.ref == 'main')) }}
+    if: ${{ (github.event.pull_request.merged && (github.event.pull_request.base.ref == 'main')) }}
     uses: ./.github/workflows/_deploy.yml
     with:
       project: ${{ inputs.project }}
