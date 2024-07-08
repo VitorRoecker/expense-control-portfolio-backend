@@ -28,6 +28,13 @@ jobs:
   Deploy:
 
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
+      PATH: ${{ github.workspace }}/bin/Release/net6.0/publish
 
     steps:
       - name: Checkout
@@ -59,18 +66,14 @@ jobs:
         with:
           name: lambda-package
           path: ${{ github.workspace }}/bin/Release/net6.0/publish
+
+      - name: Zip Artifact
+        run: |
+          cd ./bin/Release/net6.0/publish
+          zip -r lambda-package.zip .
       
       - name: Deploy to AWS Lambda
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-          JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
-          PATH: ${{ github.workspace }}/bin/Release/net6.0/publish
         run: |
-          cd $PATH zip -r lambda-package.zip .
-          
           aws lambda create-function \
             --function-name expense-control \
             --runtime dotnet6 \
