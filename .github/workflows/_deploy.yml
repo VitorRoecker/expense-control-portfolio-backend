@@ -86,6 +86,5 @@ jobs:
             --role arn:aws:iam::142098356841:role/lambda_exec_expense-control \
             --handler ExpenseControl.API \
             --zip-file fileb://$PROJECT_PATH/bin/Release/net6.0/publish/lambda-package.zip \
-            --environment Variables="{CONNECTION_STRING=$CONNECTION_STRING, JWT_TOKEN=$JWT_TOKEN}" \
             --region $AWS_REGION
         working-directory: ${{ inputs.project }}
