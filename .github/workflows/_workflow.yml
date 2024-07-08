@@ -94,3 +94,4 @@ jobs:
     with:
       project: ${{ inputs.project }}
     secrets: inherit
+    
