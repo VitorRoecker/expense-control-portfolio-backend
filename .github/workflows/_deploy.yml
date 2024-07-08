@@ -29,7 +29,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env: 
-      working-directory: ./
+      working-directory: ${{ inputs.project }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       region: ${{ secrets.AWS_REGION }}
@@ -59,16 +59,15 @@ jobs:
         working-directory: ${{ inputs.project }}
         run: dotnet build --configuration Release --no-restore
 
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: lambda-package
-          path: ${{ github.workspace }}/bin/Release/net6.0
+      - name: Publish Release
+        run: dotnet publish --configuration Release --output ./bin/Release/net6.0/publish
+        working-directory: ${{ inputs.project }}
       
       - name: Zip Artifact
         run: |
-          cd ./bin/Release/net6.0/publish
+          cd ./path/to/your/project/bin/Release/net6.0/publish
           zip -r lambda-package.zip .
+        working-directory: ${{ inputs.project }}
 
       - name: Deploy to AWS Lambda
         env:
@@ -77,13 +76,14 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
-          PATH: ${{ github.workspace }}/bin/Release/net6.0
+          PROJECT_PATH: ${{ inputs.project }}
         run: |
-            aws lambda create-function \
-              --function-name expense-control \
-              --runtime dotnet6 \
-              --role arn:aws:iam::142098356841:role/lambda_exec_expense-control \
-              --handler ExpenseControl.API \
-              --zip-file fileb://lambda-package.zip \
-              --environment Variables="{CONNECTION_STRING=$CONNECTION_STRING, JWT_TOKEN=$JWT_TOKEN}" \
-              --region $AWS_REGION
+          aws lambda create-function \
+            --function-name expense-control \
+            --runtime dotnet6 \
+            --role arn:aws:iam::142098356841:role/lambda_exec_expense-control \
+            --handler ExpenseControl.API \
+            --zip-file fileb://$PROJECT_PATH/bin/Release/net6.0/publish/lambda-package.zip \
+            --environment Variables="{CONNECTION_STRING=$CONNECTION_STRING, JWT_TOKEN=$JWT_TOKEN}" \
+            --region $AWS_REGION
+        working-directory: ${{ inputs.project }}
