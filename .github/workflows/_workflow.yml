@@ -27,26 +27,23 @@ on:
         required: true
         type: boolean
     secrets:
-      PIPELINE_TOKEN:
-        description: 'The pipeline token passed from the caller workflow'
+      CODACY_PROJECT_TOKEN:
+        description: 'CODACY_PROJECT_TOKEN'
         required: true
       AWS_REGION:
         description: 'AWS_REGION'
         required: true
-      AWS_ROLE:
-        description: 'AWS_ROLE'
+      AWS_ACCESS_KEY_ID:
+        description: 'The AWS access key id'
         required: true
-      CODACY_PROJECT_TOKEN:
-        description: 'CODACY_PROJECT_TOKEN'
+      AWS_SECRET_ACCESS_KEY:
+        description: 'The AWS secret access key'
         required: true
-      HEROKU_API_KEY:
-        description: 'The heroku api key'
+      CONNECTION_STRING:
+        description: 'Database connection string'
         required: true
-      HEROKU_APP_NAME:
-        description: 'The heroku app name'
-        required: true
-      HEROKU_EMAIL:
-        description: 'The heroku email'
+      JWT_TOKEN:
+        description: 'The JWT Token for api authentication'
         required: true
 
 permissions:
@@ -90,8 +87,10 @@ jobs:
       path: ./${{ inputs.path }}
       project: ${{ inputs.project }}
     secrets: inherit
-  #deploy:
-  #  needs: [ security ]
-  #  if: ${{ inputs.destroy == false && (github.event.pull_request.merged && (github.event.pull_request.base.ref == 'main')) }}
-  #  uses: ./.github/workflows/_deploy.yml
-  #  secrets: inherit
+  deploy:
+    needs: [ quality ]
+    if: ${{ inputs.destroy == false && (github.event.pull_request.merged && (github.event.pull_request.base.ref == 'main')) }}
+    uses: ./.github/workflows/_deploy.yml
+    with:
+      project: ${{ inputs.project }}
+    secrets: inherit

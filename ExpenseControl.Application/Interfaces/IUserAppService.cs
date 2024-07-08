@@ -2,6 +2,7 @@
 {
     public interface IUserAppService
     {
-        public Task<Responses.UserToken> CreateUser(Requests.CreateUser createUserRequest);
+        public Task<Responses.UserToken> CreateUser(Requests.Register request);
+        public Task DeleteUser(Guid request);
     }
 }

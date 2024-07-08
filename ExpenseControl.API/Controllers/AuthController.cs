@@ -18,14 +18,20 @@ namespace ExpenseControl.API.Controllers
         {
             try
             {
-                Console.WriteLine("Esta aqui");
                 var result = await _authAppService.Login(loginRequest);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest(new ApiResponse(true, ex.Message));
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Health()
+        {
+            return Ok();
         }
     }
 }
