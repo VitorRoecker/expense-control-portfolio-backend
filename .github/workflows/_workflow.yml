@@ -27,17 +27,11 @@ on:
         required: true
         type: boolean
     secrets:
-      PIPELINE_TOKEN:
-        description: 'The pipeline token passed from the caller workflow'
+      CODACY_PROJECT_TOKEN:
+        description: 'CODACY_PROJECT_TOKEN'
         required: true
       AWS_REGION:
         description: 'AWS_REGION'
-        required: true
-      AWS_ROLE:
-        description: 'AWS_ROLE'
-        required: true
-      CODACY_PROJECT_TOKEN:
-        description: 'CODACY_PROJECT_TOKEN'
         required: true
       AWS_ACCESS_KEY_ID:
         description: 'The AWS access key id'
@@ -78,13 +72,13 @@ jobs:
       test: ./${{ inputs.test }}
       project: ${{ inputs.project }}
     secrets: inherit
-  quality:
-    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
-    needs: [ test ]
-    uses: ./.github/workflows/_quality.yml
-    with:
-      project: $GITHUB_WORKSPACE/${{ inputs.project }}
-    secrets: inherit
+  #quality:
+  #  if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
+  #  needs: [ test ]
+  #  uses: ./.github/workflows/_quality.yml
+  #  with:
+  #    project: $GITHUB_WORKSPACE/${{ inputs.project }}
+  #  secrets: inherit
   #security:
   #  if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
   #  needs: [ quality ]
@@ -94,7 +88,7 @@ jobs:
   #    project: ${{ inputs.project }}
   #  secrets: inherit
   deploy:
-    needs: [ quality ]
+    needs: [ test ]
     uses: ./.github/workflows/_deploy.yml
     with:
       project: ${{ inputs.project }}

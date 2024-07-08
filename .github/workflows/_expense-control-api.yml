@@ -25,10 +25,8 @@ jobs:
       service-name: Expense-Control-Api
       destroy: false
     secrets:
-      PIPELINE_TOKEN: ${{ secrets.PIPELINE_TOKEN }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      AWS_ROLE: ${{ secrets.AWS_ROLE }}
       CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
