@@ -3,7 +3,7 @@
     "region" : "us-east-1",
     "profile" : "ExpenseControl-Profile",
     "configuration" : "Release",
-    "framework"     : "net6.0",
+    "framework"     : "net6.0-windows",
     "function-name" : "expense-control",
     "package-type"  : "Zip",
     "function-handler" : "ExpenseControl.API",

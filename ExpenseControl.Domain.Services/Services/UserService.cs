@@ -28,8 +28,7 @@ namespace ExpenseControl.Domain.Services.Services
             var user = new User
             {
                 UserName = Util.DeixaNumeros(request.DocumentoFederal),
-                Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
+                Email = request.Email
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -46,7 +45,7 @@ namespace ExpenseControl.Domain.Services.Services
 
             var result = await _userManager.DeleteAsync(user);
 
-            if (result.Succeeded!)
+            if (!result.Succeeded)
                 throw new ExpenseControlException("Erro ao excluir usuário");
         }
     }

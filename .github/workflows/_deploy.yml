@@ -62,11 +62,14 @@ jobs:
       - name: Publish Release
         run: |
           dotnet publish --configuration Release --output ./bin/Release/net6.0/publish
-
-          cd $PROJECT_PATH/bin/Release/net6.0/publish
-          zip -r lambda-package.zip .
           
         working-directory: ${{ inputs.project }}
+
+      - name: Zip Artifact
+        working-directory: ${{ inputs.project }}
+        run: |
+          cd $PROJECT_PATH/bin/Release/net6.0/publish
+          zip -r lambda-package.zip .
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

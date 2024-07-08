@@ -18,11 +18,6 @@ namespace ExpenseControl.API.Validators
                 .NotEmpty()
                 .NotNull();
 
-            RuleFor(x => x.PhoneNumber)
-                .NotEmpty()
-                .NotNull()
-                .Must(BeAValidPhone).WithMessage("Celular inválido.");
-
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("A senha é obrigatória.")
                 .MinimumLength(6).WithMessage("A senha deve ter pelo menos 6 caracteres.")

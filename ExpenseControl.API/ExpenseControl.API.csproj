@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <UserSecretsId>66cee94d-ac5e-459d-87e8-54fa8bfe2e1b</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
 	<AWSProjectType>Lambda</AWSProjectType>
+	<TargetFramework>net6.0-windows</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

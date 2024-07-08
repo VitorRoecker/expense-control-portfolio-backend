@@ -45,10 +45,10 @@ namespace ExpenseControl.Application
                 };
         }
 
-        public record Register(string DocumentoFederal, string Email, string PhoneNumber, string Password)
+        public record Register(string DocumentoFederal, string Email, string Password)
         {
             public static implicit operator DomainRequest.CreateUser(Register request)
-                => new(request.DocumentoFederal, request.Email, request.PhoneNumber, request.Password);
+                => new(request.DocumentoFederal, request.Email, request.Password);
         }
 
         public record DeleteUser(string UserId)

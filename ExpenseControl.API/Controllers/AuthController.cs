@@ -23,15 +23,8 @@ namespace ExpenseControl.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new ApiResponse(true, ex.Message));
+                return BadRequest(new ApiResponse(false, ex.Message));
             }
-        }
-
-        [HttpGet()]
-        [AllowAnonymous]
-        public IActionResult Get()
-        {
-            return Ok("Teste");
         }
     }
 }
