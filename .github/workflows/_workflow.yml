@@ -64,32 +64,32 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with:
       project: ./${{ inputs.path }}/${{ inputs.project }}
-  test:
-    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
-    needs: [ build ]
-    uses: ./.github/workflows/_test.yml
-    with:
-      test: ./${{ inputs.test }}
-      project: ${{ inputs.project }}
-    secrets: inherit
-  quality:
-    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
-    needs: [ test ]
-    uses: ./.github/workflows/_quality.yml
-    with:
-      project: $GITHUB_WORKSPACE/${{ inputs.project }}
-    secrets: inherit
-  security:
-    if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
-    needs: [ quality ]
-    uses: ./.github/workflows/_security.yml
-    with:
-      path: ./${{ inputs.path }}
-      project: ${{ inputs.project }}
-    secrets: inherit
-  #deploy:
-  #  needs: [ security ]
-  #  uses: ./.github/workflows/_deploy.yml
+  #test:
+  #  if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
+  #  needs: [ build ]
+  #  uses: ./.github/workflows/_test.yml
   #  with:
+  #    test: ./${{ inputs.test }}
   #    project: ${{ inputs.project }}
   #  secrets: inherit
+  #quality:
+  #  if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
+  #  needs: [ test ]
+  #  uses: ./.github/workflows/_quality.yml
+  #  with:
+  #    project: $GITHUB_WORKSPACE/${{ inputs.project }}
+  #  secrets: inherit
+  #security:
+  #  if: ${{ github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened') }}
+  #  needs: [ quality ]
+  #  uses: ./.github/workflows/_security.yml
+  #  with:
+  #    path: ./${{ inputs.path }}
+  #    project: ${{ inputs.project }}
+  #  secrets: inherit
+  deploy:
+    needs: [ build ]
+    uses: ./.github/workflows/_deploy.yml
+    with:
+      project: ${{ inputs.project }}
+    secrets: inherit

@@ -68,7 +68,7 @@ jobs:
       - name: Zip Artifact
         working-directory: ${{ inputs.project }}
         run: |
-          cd $PROJECT_PATH/bin/Release/net6.0/publish
+          cd bin/Release/net6.0/publish
           zip -r lambda-package.zip .
 
       - name: Upload Artifact
