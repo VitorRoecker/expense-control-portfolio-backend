@@ -14,12 +14,26 @@ namespace ExpenseControl.API.Controllers
     {
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<IActionResult> Register(Requests.CreateUser createUserRequest)
+        public async Task<IActionResult> Register(Requests.Register request)
         {
             try
             {
-                var result = await _userAppService.CreateUser(createUserRequest);
+                var result = await _userAppService.CreateUser(request);
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse(false, ex.Message));
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid userId)
+        {
+            try
+            {
+                await _userAppService.DeleteUser(userId);
+                return NoContent();
             }
             catch (Exception ex)
             {

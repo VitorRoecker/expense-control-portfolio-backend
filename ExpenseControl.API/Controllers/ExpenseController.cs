@@ -41,11 +41,11 @@ namespace ExpenseControl.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Requests.Expense request)
+        public async Task<IActionResult> Add(Requests.Expense request)
         {
             try
             {
-                var result = _appService.Add(request);
+                var result = await _appService.Add(request);
                 return Ok(result);
             }
             catch (Exception ex)

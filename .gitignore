@@ -27,5 +27,5 @@
 /ExpenseControl.Domain/bin/Release/net6.0
 /ExpenseControl.Domain.Services/bin/Release/net6.0
 /ExpenseControl.Infra/bin/Release/net6.0
-/ExpenseControl.API/aws-lambda-tools-defaults.json
-/ExpenseControl.API/Properties/launchSettings.json
+/ExpenseControl.Test/bin/Release/net6.0
+/ExpenseControl.API/bin

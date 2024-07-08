@@ -16,9 +16,14 @@
         
         <!--AutoMapper-->
         <AutoMapper_Version>12.0.1</AutoMapper_Version>
+        <!--DocsBRValidator-->
+        <DocsBRValidator_Version>1.3.2</DocsBRValidator_Version>
 
         <!--EntityFramework-->
         <EntityFramework_Version>6.4.4</EntityFramework_Version>
+
+        <!--FluentValidation-->
+        <FluentValidation_AspNetCore_Version>11.3.0</FluentValidation_AspNetCore_Version>
 
         <!--Microsoft-->
         <Microsoft_AspNetCore_Authentication_JwtBearer_Version>6.0.22</Microsoft_AspNetCore_Authentication_JwtBearer_Version>

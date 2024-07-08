@@ -6,9 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="$(AutoMapper_Version)" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ExpenseControl.Domain.Services\ExpenseControl.Domain.Services.csproj" />
