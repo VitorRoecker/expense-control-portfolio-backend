@@ -85,6 +85,6 @@ jobs:
             --runtime dotnet6 \
             --role arn:aws:iam::142098356841:role/lambda_exec_expense-control \
             --handler ExpenseControl.API \
-            --zip-file fileb://$PROJECT_PATH/bin/Release/net6.0/publish/lambda-package.zip \
+            --zip-file fileb://home/runner/work/expense-control-portfolio-backend/expense-control-portfolio-backend/ExpenseControl.API/bin/Release/net6.0/publish/lambda-package.zip \
             --region $AWS_REGION
         working-directory: ${{ inputs.project }}
