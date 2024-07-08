@@ -27,3 +27,4 @@
 /ExpenseControl.Domain/bin/Release/net6.0
 /ExpenseControl.Domain.Services/bin/Release/net6.0
 /ExpenseControl.Infra/bin/Release/net6.0
+/ExpenseControl.Test/bin/Release/net6.0
