@@ -93,6 +93,10 @@ jobs:
           name: lambda-package
           path: ./artifact
 
+      - name: Ls on root
+        run: |
+          ls
+
       - name: Deploy to AWS Lambda
         run: |
           aws lambda update-function-code \
