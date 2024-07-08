@@ -101,7 +101,7 @@ jobs:
         run: |
           aws lambda update-function-code \
             --function-name expense-control \
-            --zip-file fileb://lambda-package.zip
+            --zip-file fileb://artifact/lambda-package.zip
       
       #- name: Zip Artifact
       #  run: |
