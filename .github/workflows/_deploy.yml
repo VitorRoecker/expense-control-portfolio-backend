@@ -60,12 +60,14 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Publish Release
-        run: dotnet publish --configuration Release --output ./bin/Release/net6.0/publish
+        run: |
+          dotnet publish --configuration Release --output ./bin/Release/net6.0/publish
+          
         working-directory: ${{ inputs.project }}
       
       - name: Zip Artifact
         run: |
-          cd ${{ inputs.project }}/bin/Release/net6.0/publish
+          cd /home/runner/work/expense-control-portfolio-backend/expense-control-portfolio-backend/ExpenseControl.API/bin/Release/net6.0/publish/
           zip -r lambda-package.zip .
         working-directory: ${{ inputs.project }}
 
