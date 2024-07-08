@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lambda-package
-          path: ${{ github.workspace }}/bin/Release/net6.0/publish
+          path: ${{ github.workspace }}/bin/Release/net6.0
       
       - name: Zip Artifact
         run: |
@@ -77,7 +77,7 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
-          PATH: ${{ github.workspace }}/bin/Release/net6.0/publish
+          PATH: ${{ github.workspace }}/bin/Release/net6.0
         run: |
             aws lambda create-function \
               --function-name expense-control \
