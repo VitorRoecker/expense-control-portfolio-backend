@@ -25,14 +25,14 @@ on:
         required: true
 
 jobs:
-  Deploy:
+  Build:
 
     runs-on: ubuntu-latest
     env: 
-      working-directory: ${{ inputs.project }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       region: ${{ secrets.AWS_REGION }}
+      ROJECT_PATH: ${{ inputs.project }}
 
     steps:
       - name: Checkout
@@ -64,27 +64,73 @@ jobs:
           dotnet publish --configuration Release --output ./bin/Release/net6.0/publish
           
         working-directory: ${{ inputs.project }}
-      
-      - name: Zip Artifact
-        run: |
-          cd /home/runner/work/expense-control-portfolio-backend/expense-control-portfolio-backend/ExpenseControl.API/bin/Release/net6.0/publish/
-          zip -r lambda-package.zip .
-        working-directory: ${{ inputs.project }}
+
+  Zip:
+      runs-on: ubuntu-latest
+      needs: Build
+      steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+
+        - name: Zip Artifact
+          run: |
+            cd $PROJECT_PATH/bin/Release/net6.0/publish
+            zip -r lambda-package.zip .
+          working-directory: ${{ inputs.project }}
+
+        - name: Upload Artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: lambda-package
+            path: ${{ inputs.project }}/bin/Release/net6.0/publish/lambda-package.zip
+
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: Zip
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: lambda-package
+          path: ./artifact
 
       - name: Deploy to AWS Lambda
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-          JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
-          PROJECT_PATH: ${{ inputs.project }}
         run: |
           aws lambda create-function \
             --function-name expense-control \
             --runtime dotnet6 \
             --role arn:aws:iam::142098356841:role/lambda_exec_expense-control \
             --handler ExpenseControl.API \
-            --zip-file fileb://home/runner/work/expense-control-portfolio-backend/expense-control-portfolio-backend/ExpenseControl.API/bin/Release/net6.0/publish/lambda-package.zip \
+            --zip-file fileb://artifact/lambda-package.zip \
+            --environment Variables="{CONNECTION_STRING=$CONNECTION_STRING,JWT_TOKEN=$JWT_TOKEN}" \
             --region $AWS_REGION
-        working-directory: ${{ inputs.project }}
+      
+      #- name: Zip Artifact
+      #  run: |
+      #    cd /home/runner/work/expense-control-portfolio-backend/expense-control-portfolio-backend/ExpenseControl.API/bin/Release/net6.0/publish/
+      #    zip -r lambda-package.zip .
+      #  working-directory: ${{ inputs.project }}
+#
+      #- name: Deploy to AWS Lambda
+      #  env:
+      #    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #    AWS_REGION: ${{ secrets.AWS_REGION }}
+      #    CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      #    JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
+      #    PROJECT_PATH: ${{ inputs.project }}
+      #  run: |
+      #    aws lambda create-function \
+      #      --function-name expense-control \
+      #      --runtime dotnet6 \
+      #      --role arn:aws:iam::142098356841:role/lambda_exec_expense-control \
+      #      --handler ExpenseControl.API \
+      #      --zip-file fileb://home/runner/work/expense-control-portfolio-backend/expense-control-portfolio-backend/ExpenseControl.API/bin/Release/net6.0/publish/lambda-package.zip \
+      #      --region $AWS_REGION
+      #  working-directory: ${{ inputs.project }}
