@@ -68,7 +68,7 @@ jobs:
       - name: Zip Artifact
         working-directory: ${{ inputs.project }}
         run: |
-          cd bin/Release/net6.0/publish
+          cd $PROJECT_PATH/bin/Release/net6.0/publish
           zip -r lambda-package.zip .
 
       - name: Upload Artifact
@@ -98,7 +98,7 @@ jobs:
         run: |
           aws lambda update-function-code \
             --function-name expense-control \
-            --zip-file fileb://./artifact/lambda-package.zip
+            --zip-file fileb://lambda-package.zip
       
       #- name: Zip Artifact
       #  run: |
