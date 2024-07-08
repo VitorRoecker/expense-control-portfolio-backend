@@ -73,7 +73,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
         run: |
-            cd bin/Release/netcoreapp3.1/publish 
+            cd bin/Release/net6.0/publish 
             zip -r lambda-package.zip .
             
             aws lambda create-function \
