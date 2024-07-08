@@ -71,11 +71,10 @@ jobs:
           cd bin/Release/net6.0/publish
           zip -r lambda-package.zip .
 
-      - run: cd /home/runner/work/expense-control-portfolio-backend/expense-control-portfolio-backend/ExpenseControl.API/bin/Release/net6.0/publish
       - uses: actions/upload-artifact@v4
         with:
           name: lambda-package
-          path: lambda-package.zip
+          path: /home/runner/work/expense-control-portfolio-backend/expense-control-portfolio-backend/ExpenseControl.API/bin/Release/net6.0/publish/lambda-package.zip
           
   Deploy:
     runs-on: ubuntu-latest
