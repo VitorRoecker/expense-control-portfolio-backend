@@ -10,6 +10,8 @@
 > - Banco de dados: SQL Server
 > - Autenticallção: Identity
 
+# [Codacy Link](https://app.codacy.com/gh/VitorRoecker/expense-control-portfolio-backend/dashboard)
+
 # 🚀 Primeiros passos
 
 ### Clone o repositório:
