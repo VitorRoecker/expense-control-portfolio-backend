@@ -26,4 +26,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExpenseControl.Domain\ExpenseControl.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
