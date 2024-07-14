@@ -23,7 +23,7 @@ jobs:
       actions: write
       contents: write
       security-events: write
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
@@ -37,8 +37,32 @@ jobs:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-nuget 
-            
+            ${{ runner.os }}-nuget
+
+      - name: Install Coverlet
+        run: dotnet tool install --global coverlet.console
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ inputs.project }}
+
+      - name: Build
+        run: dotnet build ${{ inputs.project }} --no-restore
+
+      - name: Test and collect coverage
+        run: dotnet test ${{ inputs.project }} --no-build --collect:"XPlat Code Coverage"
+
+      - name: Convert coverage to lcov
+        run: |
+          reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coveragereport -reporttypes:lcov
+        env:
+          DOTNET_ROOT: /usr/share/dotnet
+
+      - name: Upload coverage to Codacy
+        run: |
+          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coveragereport/lcov.info
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+
       - name: Run Analysis
         uses: codacy/codacy-analysis-cli-action@v4.2.0
         with:
