@@ -29,3 +29,5 @@
 /ExpenseControl.Infra/bin/Release/net6.0
 /ExpenseControl.Test/bin/Release/net6.0
 /ExpenseControl.API/bin
+/ExpenseControl.Test/coverage.json
+/ExpenseControl.Test/TestResults/7f77b0fd-08bd-4456-9e9e-d529bb972a9a/coverage.cobertura.xml
