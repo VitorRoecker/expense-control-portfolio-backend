@@ -18,6 +18,7 @@ permissions:
 
 jobs:
   quality:
+    name: Quality
     runs-on: ubuntu-latest
     permissions:
       actions: write
