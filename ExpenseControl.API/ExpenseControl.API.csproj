@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" Version="$(Amazon_Lambda_AspNetCoreServer_Hosting_Version)" />
-    <PackageReference Include="coverlet.collector" Version="$(Coverlet_Collector_Version)">
+    <PackageReference Include="coverlet.msbuild" Version="$(Coverlet_Msbuild_Version)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
