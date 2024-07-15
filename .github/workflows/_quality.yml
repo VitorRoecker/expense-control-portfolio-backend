@@ -18,12 +18,13 @@ permissions:
 
 jobs:
   quality:
+    name: Quality
     runs-on: ubuntu-latest
     permissions:
       actions: write
       contents: write
       security-events: write
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
@@ -37,8 +38,8 @@ jobs:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-nuget 
-            
+            ${{ runner.os }}-nuget
+
       - name: Run Analysis
         uses: codacy/codacy-analysis-cli-action@v4.2.0
         with:
